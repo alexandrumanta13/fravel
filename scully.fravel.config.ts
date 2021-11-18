@@ -21,4 +21,5 @@ export const config: ScullyConfig = {
       '--disable-extensions',
     ],
   }
+  
 };
