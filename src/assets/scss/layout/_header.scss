@@ -1,0 +1,18 @@
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+
+  &__menu {
+    margin-left: auto;
+  }
+
+  @include respond(phone) {
+    height: 6.4rem;
+    background-color: transparent;
+    padding: 0 3.2rem;
+  }
+
+}

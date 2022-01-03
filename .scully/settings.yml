@@ -1,0 +1,11 @@
+identifier: k7wc5afat66fvag7
+appPort: 1864
+staticPort: 1668
+reloadPort: 2667
+hostName: localhost
+projectName: fravel
+homeFolder: /Users/ek23ax/Developer/fravel
+distFolder: dist/fravel
+outDir: /Users/ek23ax/Developer/fravel/dist/static
+handle404: ''
+allowErrorCollect: true

@@ -1,0 +1,16 @@
+<header class="header">
+  <div class="header__logo-container">
+    <img src="assets/logo/logo-white.svg" alt="">
+  </div>
+  <div class="header__menu">
+    <div class="hamburger" (click)="toggleMenu()">
+      <div class="line_container" [@toggleMenu]="state">
+        <span [@toggleCircle]="state" class="circle"></span>
+        <span [@toggleLineOne]="state" class="line"></span>
+        <span [@toggleLineTwo]="state" class="line"></span>
+        <span [@toggleLineThree]="state" class="line"></span>
+      </div>
+    </div>
+  </div>
+  <!-- <app-langauge></app-langauge> -->
+</header>

@@ -1,4 +1,5 @@
 import { ScullyConfig } from '@scullyio/scully';
+import '@scullyio/scully-plugin-puppeteer';
 export const config: ScullyConfig = {
   projectRoot: "./src",
   projectName: "fravel",
@@ -6,6 +7,8 @@ export const config: ScullyConfig = {
   routes: {
   },
   puppeteerLaunchOptions: {
+    // slowMo: 4000,
+    // devtools: true,
     args: [
       '--disable-gpu',
       '--renderer',

@@ -1,0 +1,13 @@
+{
+    "titles": {
+        "about": "About Us",
+        "users": {
+            "root": "Users",
+            "profile": "User Profile",
+            "myaccount": "List Users"
+        }
+    },
+    "routes": {
+        "book-flight": "bilete-avion"
+    }
+}
