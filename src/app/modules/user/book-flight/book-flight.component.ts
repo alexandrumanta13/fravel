@@ -1,17 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
 import { Language } from 'src/app/core/types';
 import { CurrentRoute } from 'src/app/core/services/routes/routes.types';
 import { RoutesService } from 'src/app/core/services';
+import { DOCUMENT } from '@angular/common';
 
 
 
 
-
+declare var $: any;
 @Component({
   selector: 'app-book-flight',
   templateUrl: './book-flight.component.html',
@@ -25,21 +26,22 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   defaultlanguage = this._I18nService.defaultLanguage;
 
 
- 
+
 
   constructor(
     public translate: TranslateService,
     private router: Router,
     private _I18nService: I18nService,
-    private _RoutesService: RoutesService
+    private _RoutesService: RoutesService,
+    private _renderer2: Renderer2,
+    private activatedRoute: ActivatedRoute,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
 
-
     this.currentRoute = this._RoutesService.getCurrentRoute();
-    console.log(this.currentRoute)
     //  this.I18nService.defaultLanguage.next(this.languages.slice().filter(language => language.key === this.currentRoute.language_key));
   }
 
@@ -53,7 +55,18 @@ export class BookFlightComponent implements OnInit, OnDestroy {
           this.translate.setDefaultLang(lang[0].key);
         }
       });
+
+    let script = this._renderer2.createElement('script');
+    script.type = `text/javascript`;
+    script.dataset.affilid = `fravelfarvelbookflight`;
+    script.src = `https://widgets.kiwi.com/scripts/widget-search-iframe.js`
+    script.async = true
+
+    this._renderer2.appendChild(this._document.head, script);
+    
   }
+
+
 
   ngOnDestroy() {
     this._unsubscribeAll.next();
