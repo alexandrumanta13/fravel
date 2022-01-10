@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { I18nService } from '../../services';
 
 import { environment } from '../../../../environments/environment.prod'
-import { Language } from '../../types';
+import { Language, Languages } from '../../types';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class I18nStorageService {
 
   fetchLanguages() {
     return this._httpClient
-      .get<Language[]>(
+      .get<Languages[]>(
         environment.FIREBASE_ENDPOINT + 'languages.json',
       )
       .pipe(

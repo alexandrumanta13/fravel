@@ -1,32 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { Language } from './i18n.type';
+import { Language, Languages } from '../../types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class I18nService {
-  languagesChanged = new BehaviorSubject<Language[]>([]);
-  defaultLanguage = new BehaviorSubject<Language[]>([]);
-  items$ = this.defaultLanguage.asObservable();
-  private languages: Language[] = [];
+  languagesChanged$ = new BehaviorSubject<Languages[]>([]);
+  defaultLanguage$ = new Subject<Language>();
+  items$ = this.defaultLanguage$.asObservable();
+  private languages: Languages[] = [];
 
   constructor() { }
 
-  setLanguages(languages: Language[]) {
+  setLanguages(languages: Languages[]) {
     this.languages = languages;
-    this.languagesChanged.next(this.languages.slice());
-    this.defaultLanguage.next(this.languages.slice().filter(language => language.isDefault === true));
+    this.languagesChanged$.next(this.languages.slice());
+    this.defaultLanguage$.next(this.languages.slice().find(language => language.isDefault === true));
   }
 
-  defaultLanguageChanged$(): Observable<any> {
-    return this.defaultLanguage.asObservable();
+  defaultLanguageChanged$(): Observable<Language> {
+    return this.defaultLanguage$.asObservable();
   }
 
   getDefaultLanguage() {
-    return this.languages.slice().filter(language => language.isDefault === true)
+    const setDefaultLang = this.languages.slice().filter(language => language.isDefault === true);
+    return setDefaultLang[0];
   }
 
   getLanguages() {

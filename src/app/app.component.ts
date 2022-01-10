@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { I18nService } from './core/services';
-import { AppRoutes } from './core/services/routes/routes.types';
+import { AppRoutes } from './core/types';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class AppComponent implements OnInit, OnDestroy {
 
   route: AppRoutes[] = [];
-  
+    
   constructor(public translate: TranslateService,
     private _I18nService: I18nService,
   ) {
@@ -49,5 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() { }
+  ngOnDestroy() { 
+    
+  }
 }

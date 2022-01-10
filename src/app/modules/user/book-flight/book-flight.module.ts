@@ -16,7 +16,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    BookFlightComponent
+    BookFlightComponent,
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Language } from '../../types';
-import { AppRoutes, CurrentRoute } from './routes.types';
+import { AppRoutes, CurrentRoute } from '../../types';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -21,7 +21,7 @@ export class RoutesService {
 
   constructor(private location: Location, private router: Router) { }
 
-  setRoutes(routes: AppRoutes[], url: string, defaultLanguage: Language[]) {
+  setRoutes(routes: AppRoutes[], url: string, defaultLanguage: Language) {
     this.routes = routes;
 
 
@@ -32,7 +32,7 @@ export class RoutesService {
         return route
       })
 
-    const checkIfURLisDefaultLang = getCurrentUrl[0].translate_route.filter(route => route.language_key === defaultLanguage[0].key)
+    const checkIfURLisDefaultLang = getCurrentUrl[0].translate_route.filter(route => route.language_key === defaultLanguage.key)
 
 
     this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
