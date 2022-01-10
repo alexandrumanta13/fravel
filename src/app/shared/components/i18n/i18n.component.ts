@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Language } from '../../../core/types';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { I18nService } from '../../../core/services';
-import { CurrentRoute } from '../../../core/services/routes/routes.types';
-import { RoutesService } from '../../../core/services';
+
+import { CurrentRoute, Language, Languages } from '../../../core/types';
+import { RoutesService, I18nService } from '../../../core/services';
 
 
 
@@ -28,40 +27,38 @@ export class I18nComponent implements OnInit, OnDestroy {
   ) {
     this.languages = this._I18nService.getLanguages();
     this.currentRoute = this._RoutesService.getCurrentRoute();
-    this._I18nService.defaultLanguage.next(this.languages.slice().filter(language => language.key === this.currentRoute.language_key));
+
+    const setDefaultLanguage = this.languages.slice().filter(language => language.key === this.currentRoute.language_key);
+    this._I18nService.defaultLanguage$.next(setDefaultLanguage[0]);
   }
 
   ngOnInit() {
     
-    this._I18nService.languagesChanged.pipe(
+    this._I18nService.languagesChanged$.pipe(
       takeUntil(this._unsubscribeAll))
       .subscribe(
-        (languages: Language[]) => {
+        (languages: Languages[]) => {
           this.languages = languages;
         }
       );
 
-    this._I18nService.defaultLanguage.pipe(
+    this._I18nService.defaultLanguage$.pipe(
       takeUntil(this._unsubscribeAll))
       .subscribe(
-        (language: Language[]) => {
+        (language: Language) => {
           console.log(language)
-          this.translate.setDefaultLang(language[0].key);
-          this.translate.use(language[0].key)
+          this.translate.setDefaultLang(language.key);
+          this.translate.use(language.key)
         }
       );
 
   }
 
-  setLanguage(language: Language) {
-    let languageArr = [];
-    languageArr.push(language)
-    
+  setLanguage(language: Language) {  
     this.translate.setDefaultLang(language.key);
     this.translate.use(language.key)
      
-    this._I18nService.defaultLanguage.next(languageArr);
-
+    this._I18nService.defaultLanguage$.next(language);
   }
 
 

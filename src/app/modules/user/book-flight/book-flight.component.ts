@@ -1,13 +1,15 @@
-import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil, tap, } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
-import { Language } from 'src/app/core/types';
-import { CurrentRoute } from 'src/app/core/services/routes/routes.types';
+
+import { CurrentRoute, Language } from 'src/app/core/types';
 import { RoutesService } from 'src/app/core/services';
-import { DOCUMENT } from '@angular/common';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { BookFlightService } from './services/book-flight.service';
+import { Airports, GeoLocation } from './types';
 
 
 
@@ -23,21 +25,24 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   language: string = '';
   routeURL: any
   currentRoute: CurrentRoute;
-  defaultlanguage = this._I18nService.defaultLanguage;
-
-
+  defaultlanguage = this._I18nService.defaultLanguage$;
+  tokenUrl = 'https://test.api.amadeus.com/v1/security/oauth2/token';
+  token: any;
+  location: GeoLocation = {
+    isoCountryCode: '',
+    latitude: 0,
+    longitude: 0
+  };
 
 
   constructor(
-    public translate: TranslateService,
-    private router: Router,
+    public _translate: TranslateService,
+    private _router: Router,
     private _I18nService: I18nService,
     private _RoutesService: RoutesService,
-    private _renderer2: Renderer2,
-    private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) private _document: Document
+    private _BookFlightService: BookFlightService
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    this._router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
 
@@ -49,30 +54,43 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     this._I18nService.defaultLanguageChanged$()
       .pipe(distinctUntilChanged())
       .subscribe((lang: any) => {
-        // Manipulate the updated language
-        if (lang && lang.length > 0) {
-          this.translate.use(lang[0].key)
-          this.translate.setDefaultLang(lang[0].key);
-        }
+
+        this._translate.use(lang.key)
+        this._translate.setDefaultLang(lang.key);
+
+        this.changeApiLanguage(lang)
       });
 
-    let script = this._renderer2.createElement('script');
-    script.type = `text/javascript`;
-    script.dataset.affilid = `fravelfarvelbookflight`;
-    script.src = `https://widgets.kiwi.com/scripts/widget-search-iframe.js`
-    script.async = true
 
-    this._renderer2.appendChild(this._document.head, script);
-    
+
+    this._BookFlightService.getGeolocation$().pipe(
+      takeUntil(this._unsubscribeAll))
+      .subscribe(
+        (location: GeoLocation) => {
+          console.log(location)
+          this.location = location
+        }
+      );
+
+
+    this._BookFlightService.airports$
+      .pipe(distinctUntilChanged())
+      .subscribe((airporst: Airports) => {
+
+        console.log(airporst)
+      });
   }
 
+  changeApiLanguage(language: Language) {
+
+    console.log('asdas')
+    this._BookFlightService.getNearbyAirporst(this.location, language)
+  }
 
 
   ngOnDestroy() {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
-
 
 }
