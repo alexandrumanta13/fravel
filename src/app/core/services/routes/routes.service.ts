@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class RoutesService {
 
-  routesChanged = new Subject<AppRoutes[]>();
-  currentRoute = new Subject<CurrentRoute>();
+  routesChanged$ = new Subject<AppRoutes[]>();
+  currentRoute$ = new Subject<CurrentRoute>();
 
   private routes: AppRoutes[] = [];
   private currentRouteSet: CurrentRoute = {
@@ -23,7 +23,6 @@ export class RoutesService {
 
   setRoutes(routes: AppRoutes[], url: string, defaultLanguage: Language) {
     this.routes = routes;
-
 
     const getCurrentUrl = this.routes.slice()
       .map(route => {
@@ -38,8 +37,8 @@ export class RoutesService {
     this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
     this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
 
-    this.routesChanged.next(this.routes.slice());
-    this.currentRoute.next(checkIfURLisDefaultLang[0]);
+    this.routesChanged$.next(this.routes.slice());
+    this.currentRoute$.next(checkIfURLisDefaultLang[0]);
 
     if (checkIfURLisDefaultLang[0].url != url) {
       this.router.navigate([`${checkIfURLisDefaultLang[0].url}`])

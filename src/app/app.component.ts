@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { I18nService } from './core/services';
-import { AppRoutes } from './core/types';
+import { AppRoutes, Language } from './core/types';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
 
   route: AppRoutes[] = [];
-    
+
   constructor(public translate: TranslateService,
     private _I18nService: I18nService,
   ) {
@@ -38,19 +38,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this._I18nService.defaultLanguageChanged$()
       .pipe(distinctUntilChanged())
-      .subscribe((lang: any) => {
-        // Manipulate the updated language
-        if (lang && lang.length > 0) {
-          this.translate.use(lang[0].key)
-          this.translate.setDefaultLang(lang[0].key);
-        }
+      .subscribe((lang: Language) => {
+        this.translate.use(lang.key)
+        this.translate.setDefaultLang(lang.key);
+
       });
 
     //this.RoutesStorageService.storeRoutes(this.route)
 
   }
 
-  ngOnDestroy() { 
-    
+  changeLang(lang: string) {
+    this.translate.use(lang)
+    this.translate.setDefaultLang(lang);
+  }
+  ngOnDestroy() {
+
   }
 }

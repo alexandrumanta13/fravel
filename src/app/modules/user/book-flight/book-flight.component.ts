@@ -47,7 +47,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     };
 
     this.currentRoute = this._RoutesService.getCurrentRoute();
-    //  this.I18nService.defaultLanguage.next(this.languages.slice().filter(language => language.key === this.currentRoute.language_key));
+    
   }
 
   ngOnInit() {
@@ -67,7 +67,6 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribeAll))
       .subscribe(
         (location: GeoLocation) => {
-          console.log(location)
           this.location = location
         }
       );
@@ -82,8 +81,6 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   changeApiLanguage(language: Language) {
-
-    console.log('asdas')
     this._BookFlightService.getNearbyAirporst(this.location, language)
   }
 

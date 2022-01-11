@@ -30,9 +30,6 @@ export function createTranslateLoader(http: HttpClient) {
       enableRouteTranslate: true,
       enableTitleTranslate: true
     }),
-    // AgmCoreModule.forRoot({
-    //   apiKey: ''
-    // })
   ],
   exports: [TranslateModule, NgxTranslateRoutesModule],
   providers: []

@@ -20,7 +20,6 @@ export class BookFlightService {
 
 
   getNearbyAirporst(location: GeoLocation, defaultLanguage: Language): Observable<Airports> {
-    console.log(location, defaultLanguage)
     this.geolocation$.next(location);
 
     const headers = new HttpHeaders({

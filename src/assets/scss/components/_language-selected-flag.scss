@@ -1,0 +1,24 @@
+.lang {
+  &__container {
+    display: flex;
+    margin-left: auto;
+    margin-right: 3.2rem;
+    width: 3.2rem;
+    height: 2.2rem;
+    border-radius: .4rem;
+    background: #A6C5CD;
+    box-shadow: .4rem .4rem .8rem #8da7ae, -.4rem -.4rem .8rem #bfe3ec;
+    overflow: hidden;
+  }
+
+  &__default-lang {
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      position: relative;
+      top: -.5rem;
+    }
+  }
+}

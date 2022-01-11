@@ -4,6 +4,7 @@ export interface Languages {
     key: string;
     language: string;
     locale: string;
+    flag?: string
 }[];
 
 export interface Language {
@@ -12,4 +13,5 @@ export interface Language {
     key: string;
     language: string;
     locale: string;
+    flag?: string
 };

@@ -46,7 +46,6 @@ export class I18nComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribeAll))
       .subscribe(
         (language: Language) => {
-          console.log(language)
           this.translate.setDefaultLang(language.key);
           this.translate.use(language.key)
         }
@@ -57,6 +56,8 @@ export class I18nComponent implements OnInit, OnDestroy {
   setLanguage(language: Language) {  
     this.translate.setDefaultLang(language.key);
     this.translate.use(language.key)
+
+    localStorage.setItem('FravelDefaultLanguage', JSON.stringify(language));
      
     this._I18nService.defaultLanguage$.next(language);
   }

@@ -12,13 +12,20 @@ export class I18nService {
   defaultLanguage$ = new Subject<Language>();
   items$ = this.defaultLanguage$.asObservable();
   private languages: Languages[] = [];
+  existingDefaultLangauge: Language = JSON.parse(localStorage.getItem('FravelDefaultLanguage') || '{}');
 
   constructor() { }
 
   setLanguages(languages: Languages[]) {
     this.languages = languages;
     this.languagesChanged$.next(this.languages.slice());
-    this.defaultLanguage$.next(this.languages.slice().find(language => language.isDefault === true));
+
+    if (this.existingDefaultLangauge) {
+      this.defaultLanguage$.next(this.existingDefaultLangauge);
+    } else {
+      this.defaultLanguage$.next(this.languages.slice().find(language => language.isDefault === true));
+    }
+
   }
 
   defaultLanguageChanged$(): Observable<Language> {
@@ -26,8 +33,12 @@ export class I18nService {
   }
 
   getDefaultLanguage() {
-    const setDefaultLang = this.languages.slice().filter(language => language.isDefault === true);
-    return setDefaultLang[0];
+    if (this.existingDefaultLangauge) {
+      return this.existingDefaultLangauge
+    } else {
+      const setDefaultLang = this.languages.slice().filter(language => language.isDefault === true);
+      return setDefaultLang[0];
+    }
   }
 
   getLanguages() {
