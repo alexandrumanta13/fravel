@@ -22,6 +22,7 @@ export class RoutesService {
   constructor(private location: Location, private router: Router) { }
 
   setRoutes(routes: AppRoutes[], url: string, defaultLanguage: Language) {
+    console.log(defaultLanguage)
     this.routes = routes;
 
     const getCurrentUrl = this.routes.slice()

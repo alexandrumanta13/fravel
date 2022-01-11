@@ -20,7 +20,7 @@ export class I18nService {
     this.languages = languages;
     this.languagesChanged$.next(this.languages.slice());
 
-    if (this.existingDefaultLangauge) {
+    if (Object.keys(this.existingDefaultLangauge).length) {
       this.defaultLanguage$.next(this.existingDefaultLangauge);
     } else {
       this.defaultLanguage$.next(this.languages.slice().find(language => language.isDefault === true));
@@ -33,7 +33,7 @@ export class I18nService {
   }
 
   getDefaultLanguage() {
-    if (this.existingDefaultLangauge) {
+    if (Object.keys(this.existingDefaultLangauge).length) {
       return this.existingDefaultLangauge
     } else {
       const setDefaultLang = this.languages.slice().filter(language => language.isDefault === true);
