@@ -42,6 +42,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     private _RoutesService: RoutesService,
     private _BookFlightService: BookFlightService
   ) {
+    
     this._router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };

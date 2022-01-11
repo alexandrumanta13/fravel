@@ -17,7 +17,7 @@ import { RoutesService, I18nService } from '../../../core/services';
 export class I18nComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  languages: Language[];
+  languages: Languages[];
   currentRoute: CurrentRoute
 
   constructor(
@@ -46,6 +46,7 @@ export class I18nComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribeAll))
       .subscribe(
         (language: Language) => {
+
           this.translate.setDefaultLang(language.key);
           this.translate.use(language.key)
         }
