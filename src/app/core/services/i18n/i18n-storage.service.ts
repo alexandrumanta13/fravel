@@ -32,6 +32,7 @@ export class I18nStorageService {
       )
       .pipe(
         tap(languages => {
+          console.log(languages)
           this._I18nService.setLanguages(languages);
         })
       )

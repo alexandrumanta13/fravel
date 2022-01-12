@@ -4,7 +4,12 @@ export interface Languages {
     key: string;
     language: string;
     locale: string;
-    flag?: string
+    flag: string,
+    defaultCurrency: string,
+    currency: {
+        value: string,
+        isDefault: boolean
+    }[]
 }[];
 
 export interface Language {
@@ -13,5 +18,10 @@ export interface Language {
     key: string;
     language: string;
     locale: string;
-    flag?: string
+    flag: string;
+    defaultCurrency: string;
+    currency: {
+        value: string,
+        isDefault: boolean
+    }[]
 };

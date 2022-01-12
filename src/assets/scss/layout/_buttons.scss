@@ -1,0 +1,48 @@
+.btn {
+  outline: none;
+  border: none;
+  font-family: $sf-bold;
+  font-size: 1.9rem;
+  
+
+  &.btn-primary {
+    box-shadow: 0 1.2rem 2.4rem 0 $color-grey-3;
+    background-color: $color-dark;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .8rem 1.6rem;
+    border-radius: 1.2rem;
+    height: 6.4rem;
+  }
+
+  &.btn-full-width {
+    width: 100%;
+  }
+}
+
+
+.btn-grad {
+  background-image: linear-gradient(to right, #283048 0%, #859398 51%, #283048 100%)
+}
+
+.btn-grad {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
