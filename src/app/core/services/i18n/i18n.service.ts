@@ -34,9 +34,11 @@ export class I18nService {
 
   getDefaultLanguage() {
     if (Object.keys(this.existingDefaultLangauge).length) {
+      console.log(this.existingDefaultLangauge)
       return this.existingDefaultLangauge
     } else {
       const setDefaultLang = this.languages.slice().filter(language => language.isDefault === true);
+      console.log(setDefaultLang)
       return setDefaultLang[0];
     }
   }

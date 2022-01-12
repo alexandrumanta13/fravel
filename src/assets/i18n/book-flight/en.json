@@ -1,5 +1,10 @@
 {
     "BOOK-FILGHT": {
         "TITLE": "Plane tickets"
+    },
+    "COMMON": {
+        "LABELS": {
+            "CURRENCY": "Currency"
+        }
     }
 }
