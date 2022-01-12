@@ -1,5 +1,8 @@
 import { style, trigger, state, transition, group, query, animate, animateChild } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { I18nService } from 'src/app/core/services';
+import { Language } from 'src/app/core/types';
 
 @Component({
   selector: 'app-header',
@@ -72,14 +75,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   state: string = 'closed';
+  defaultFlag: Language = this._I18nService.getDefaultLanguage();
 
-  constructor() { }
+  constructor(
+    private _I18nService: I18nService
+  ) { }
 
   ngOnInit(): void {
+    this._I18nService.defaultLanguageChanged$()
+      .pipe(distinctUntilChanged())
+      .subscribe((lang: Language) => {
+        this.defaultFlag = (lang)
+      });
   }
 
   toggleMenu() {
-    this.state = ( this.state === 'closed' ? 'open' : 'closed' );
+    this.state = (this.state === 'closed' ? 'open' : 'closed');
   }
 
 }

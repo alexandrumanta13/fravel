@@ -2,6 +2,11 @@
   <div class="header__logo-container">
     <img src="assets/logo/logo-white.svg" alt="">
   </div>
+  <div class="lang__container">
+    <div class="lang__default-lang">
+      <img [src]="defaultFlag.flag" [alt]="defaultFlag.language">
+    </div>
+  </div>
   <div class="header__menu">
     <div class="hamburger" (click)="toggleMenu()">
       <div class="line_container" [@toggleMenu]="state">
@@ -12,5 +17,7 @@
       </div>
     </div>
   </div>
-  <app-langauge></app-langauge>
 </header>
+
+
+

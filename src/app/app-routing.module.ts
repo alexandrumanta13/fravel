@@ -15,7 +15,7 @@ const routerConfig: ExtraOptions = {
 
 export const routes: Routes = [
   
-  { path: '', pathMatch : 'full', redirectTo: 'bilete-avion', data: {title: 'titles.users.root'}},
+  { path: '', pathMatch : 'full', redirectTo: 'bilete-avion', resolve: [I18nResolverService, BookFlightResolver], data: {title: 'titles.users.root'}},
   //{path: '', component: BookFlightComponent,  resolve: [I18nResolverService] },
   {
     path: 'book-flight',
