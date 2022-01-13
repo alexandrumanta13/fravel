@@ -2,8 +2,19 @@
 <app-header></app-header>
 <!-- <h2>{{ 'BOOK-FILGHT.TITLE' | translate }}</h2> -->
 
-<div class="destination-selector">
-    <!-- <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" (keyup)="onKey($event)"> -->
+<div class="book-flight__container" [@toggleMenu]="toggleMenuState">
+    <div class="book-flight__inner" [@toggleInner]="toggleMenuState">
+        <div class="destination-selector">
+            <div class="blurry-overlay"></div>
+            <!-- <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" (keyup)="onKey($event)"> -->
+        </div>
+        <div class="top-destinations">
+
+        </div>
+        <app-footer></app-footer>
+    </div>
+   
 </div>
+<app-sidebar [@toggleSidebar]="toggleMenuState"></app-sidebar>
 
 

@@ -7,9 +7,13 @@
 @import "assets/scss/base/font-face";
 
 @import "assets/scss/layout/header";
+@import "assets/scss/layout/footer";
+@import "assets/scss/layout/sidebar";
 @import "assets/scss/layout/buttons";
 
 @import "assets/scss/components/hamburger";
 @import "assets/scss/components/destination-selector";
 @import "assets/scss/components/language-selected-flag";
 @import "assets/scss/components/language-selector";
+
+@import "assets/scss/pages/book-flight";

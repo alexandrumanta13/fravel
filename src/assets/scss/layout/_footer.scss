@@ -1,0 +1,6 @@
+.footer {
+    @include respond(phone) {
+        background-color: $color-white;
+        height: 6.4rem;
+    }
+}

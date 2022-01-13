@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
 import { Language } from 'src/app/core/types';
+import { BookFlightService } from 'src/app/modules/user/book-flight/services/book-flight.service';
 
 @Component({
   selector: 'app-header',
@@ -78,7 +79,8 @@ export class HeaderComponent implements OnInit {
   defaultFlag: Language = this._I18nService.getDefaultLanguage();
 
   constructor(
-    private _I18nService: I18nService
+    private _I18nService: I18nService,
+    private _BookFlightService: BookFlightService
   ) { }
 
   ngOnInit(): void {
@@ -91,6 +93,7 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.state = (this.state === 'closed' ? 'open' : 'closed');
+    this._BookFlightService.menuState$.next(this.state)
   }
 
 }

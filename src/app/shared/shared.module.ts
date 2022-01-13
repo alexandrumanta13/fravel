@@ -8,6 +8,7 @@ import { I18nComponent } from './components/i18n/i18n.component';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/common/', '.json');
@@ -18,7 +19,8 @@ export function createTranslateLoader(http: HttpClient) {
     declarations: [
         HeaderComponent,
         I18nComponent,
-        FooterComponent
+        FooterComponent,
+        SidebarComponent
     ],
     imports: [
         CommonModule,
@@ -39,7 +41,9 @@ export function createTranslateLoader(http: HttpClient) {
         FormsModule,
         ReactiveFormsModule,
         HeaderComponent,
+        FooterComponent,
         I18nComponent,
+        SidebarComponent
     ],
     providers: []
 })
