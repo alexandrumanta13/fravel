@@ -12,7 +12,8 @@ import { Airports, GeoLocation } from '../types';
 })
 export class BookFlightService {
   geolocation$ = new BehaviorSubject<GeoLocation>({} as GeoLocation);
-  airports$ = new BehaviorSubject<any>({})
+  airports$ = new BehaviorSubject<any>({});
+  menuState$ = new BehaviorSubject<string>('');
 
   constructor(
     private _httpClient: HttpClient
@@ -55,6 +56,10 @@ export class BookFlightService {
 
   getGeolocation$(): Observable<GeoLocation> {
     return this.geolocation$.asObservable();
+  }
+
+  openSideMenu$(): Observable<string> {
+    return this.menuState$.asObservable();
   }
 
 }

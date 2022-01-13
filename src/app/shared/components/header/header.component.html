@@ -2,7 +2,7 @@
   <div class="header__logo-container">
     <img src="assets/logo/logo-white.svg" alt="">
   </div>
-  <div class="lang__container" (click)="languageSelector.toggleLanguage()">
+  <div class="lang__container" [class.menu-open]="state === 'open'" (click)="languageSelector.toggleLanguage()">
     <div class="lang__default-lang">
       <img [src]="defaultFlag.flag" [alt]="defaultFlag.language">
     </div>

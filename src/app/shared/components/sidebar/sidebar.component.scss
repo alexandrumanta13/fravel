@@ -1,0 +1,16 @@
+@import '../../../../styles.scss';
+
+:host {
+  @include respond(phone) {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -50%;
+    z-index: 0;
+    opacity: 0;
+    width: 50%;
+    z-index: -9999;
+  }
+}
+
+
