@@ -1,16 +1,22 @@
-@import '../../../../styles.scss';
-
 :host {
-  @include respond(phone) {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: -50%;
-    z-index: 0;
-    opacity: 0;
-    width: 50%;
-    z-index: -9999;
+
+  height: 100vh;
+  position: fixed;
+  top: 0;
+ // left: -50%;
+  z-index: 0;
+  //opacity: 0;
+  width: 60%;
+  //z-index: -9999;
+  transform: translate3d(-100%, 0, 0);
+  transition: .8s 10ms cubic-bezier(.68, -.55, .265, 1.55);
+
+  &.open {
+    //z-index: 9999;
+   // left: 0;
+   // opacity: 1;
+    transform: translate3d(0, 0, 0);
+    //transition: .8s 10ms cubic-bezier(.68, -.55, .265, 1.55);
   }
+
 }
-
-

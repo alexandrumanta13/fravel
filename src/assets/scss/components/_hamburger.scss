@@ -1,13 +1,57 @@
 .hamburger {
   position: relative;
 
-  .line {
-    width: 3rem;
-    height: 2px;
-    background-color: $color-white;
-    display: block;
-    margin: 5px auto;
+  .line_container {
+    transform: rotate(0deg);
+    transition: 300ms all;
+
+    .line {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-white;
+      display: block;
+      margin: 5px auto;
+
+      &__one {
+        transform: translateY(0);
+        transition: 300ms all;
+      }
+
+      &__two {
+        opacity: 1;
+        transition: 300ms all;
+      }
+
+      &__three {
+        transform: translateY(0) rotate(0);
+        transition: 300ms all;
+      }
+
+    }
+
+    &.open {
+      transform: rotate(45deg);
+
+      .line {
+        &__one {
+          transform: translateY(1rem);
+          transition: 300ms all;
+        }
+
+        &__two {
+          opacity: 0;
+          transition: 300ms all;
+        }
+
+        &__three {
+          transform: translateY(-.8rem) rotate(90deg);
+          transition: 300ms all;
+        }
+      }
+    }
   }
+
+
 
   .circle {
     position: absolute;

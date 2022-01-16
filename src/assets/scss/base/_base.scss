@@ -33,6 +33,7 @@ body {
   font-size: $default-font-size;
   font-family: $sf-regular;
   color: $color-deep-dark;
+  overflow: hidden;
 }
 
 ::selection {

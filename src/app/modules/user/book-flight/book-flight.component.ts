@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -20,6 +20,7 @@ declare var $: any;
   selector: 'app-book-flight',
   templateUrl: './book-flight.component.html',
   styleUrls: ['./book-flight.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('toggleMenu', [
       state('closed', style({
@@ -105,6 +106,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
 
 
   toggleMenuState: string = '';
+  firstStart: boolean = false;
 
 
   constructor(
@@ -131,7 +133,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
         this._translate.use(lang.key)
         this._translate.setDefaultLang(lang.key);
 
-        this.changeApiLanguage(lang)
+        this.changeApiLanguage(lang);
       });
 
 
@@ -175,6 +177,9 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   menuOpenState(state: string) {
+    if (state === 'open') {
+      this.firstStart = true;
+    }
     this.toggleMenuState = state;
   }
 

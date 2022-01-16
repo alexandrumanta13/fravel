@@ -1,1 +1,1 @@
-[{"route":"/"}]
+[{"route":"/book-flight"},{"route":"/book-flight/book-flight"},{"route":"/book-flight/bilete-avion"},{"route":"/bilete-avion"},{"route":"/bilete-avion/book-flight"},{"route":"/bilete-avion/bilete-avion"},{"route":"/"}]
