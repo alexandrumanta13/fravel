@@ -14,16 +14,18 @@ const routerConfig: ExtraOptions = {
 };
 
 export const routes: Routes = [
-  
-  { path: '', pathMatch : 'full', redirectTo: 'bilete-avion', resolve: [I18nResolverService, BookFlightResolver], data: {title: 'titles.users.root'}},
+
+  { path: '', pathMatch: 'full', redirectTo: 'bilete-avion', resolve: [I18nResolverService, BookFlightResolver], data: { title: 'titles.users.root' } },
   //{path: '', component: BookFlightComponent,  resolve: [I18nResolverService] },
   {
     path: 'book-flight',
+    pathMatch: 'full',
     loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
     resolve: [I18nResolverService, BookFlightResolver]
   },
   {
     path: 'bilete-avion',
+    pathMatch: 'full',
     loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
     resolve: [I18nResolverService, BookFlightResolver]
   },
