@@ -7,8 +7,7 @@
       @include background-opacity($color-dark, 0.5);
       top: 0;
       left: 0;
-      z-index: 9;
-      //   display: none;
+      z-index: 999;
     }
   }
 
@@ -19,11 +18,11 @@
       left: 0;
       background: $color-grey-4;
       width: 100%;
-      height: 45vh;
+      height: 50vh;
       border-top-left-radius: 4rem;
       border-top-right-radius: 4rem;
       padding: 3.2rem;
-      z-index: 9;
+      z-index: 1000;
     }
   }
 
@@ -113,7 +112,7 @@
     ul {
         list-style: none;
         display: flex;
-        margin: 1.6rem -.8rem 0;
+        margin: 1.6rem -.8rem;
         
 
         li {

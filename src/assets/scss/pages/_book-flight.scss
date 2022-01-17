@@ -15,16 +15,27 @@
       position: relative;
       top: -6.4rem;
       overflow: hidden;
+
+      &.open {}
     }
   }
 
   &__inner {
     @include respond(phone) {
       height: 100%;
-      left: 0px;
-      top: 0px;
+      width: 100%;
       position: relative;
       box-shadow: rgb(166 197 205 / 15%) 0px 15px 25px, rgb(166 197 205 / 5%) 0px 5px 10px;
+      overflow: hidden;
+      clip-path: inset(0 round 0 0 0 0);
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: transform 1200ms ease, clip-path 1800ms;
+
+      &.open {
+        clip-path: inset(10px round 60px 60px 60px 60px);
+        transform: translate3d(60%, 0, 0) scale(.8);
+        transition: transform 1200ms ease, clip-path 1800ms;
+      }
     }
   }
 }
