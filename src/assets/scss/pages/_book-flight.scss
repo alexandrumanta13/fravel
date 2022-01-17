@@ -27,81 +27,15 @@
       position: relative;
       box-shadow: rgb(166 197 205 / 15%) 0px 15px 25px, rgb(166 197 205 / 5%) 0px 5px 10px;
       overflow: hidden;
-      //transform: scale(1);
-      border-radius: 0;
-      // transition: .8s 10ms cubic-bezier(.68,-.55, .265, 1.55);
+      clip-path: inset(0 round 0 0 0 0);
       transform: translate3d(0, 0, 0) scale(1);
-      transition: transform 1200ms ease, border-radius 0.23s;
-
-
-
-
-      &.animated {
-        // transform: scale(.8);
-        // border-radius: 6rem;
-        // left: 60%;
-        // top: 10%;
-        // height: 90%;
-        // position: absolute;
-        // animation-name: scaleBack;
-        // animation-duration: 800ms;
-        // animation-fill-mode: forwards;
-      
-      }
+      transition: transform 1200ms ease, clip-path 1800ms;
 
       &.open {
-   
-        //position: absolute;
-        //transition: .8s 10ms cubic-bezier(.68,-.55, .265, 1.55);
-        //transition-delay: 200ms;
-        // animation-name: scale;
-        // animation-duration: 500ms;
-        // animation-fill-mode: forwards;
-        border-radius: 6rem;
+        clip-path: inset(10px round 60px 60px 60px 60px);
         transform: translate3d(60%, 0, 0) scale(.8);
+        transition: transform 1200ms ease, clip-path 1800ms;
       }
     }
   }
-}
-
-
-@keyframes scale {
-  from {
-    transform: scale(1);
-    border-radius: 0;
-    left: 0;
-    top: 0;
-    height: 100%;
-    position: relative;
-  }
-
-  to {
-    transform: scale(.8);
-    border-radius: 6rem;
-    left: 60%;
-    top: 10%;
-    height: 90%;
-    position: absolute;
-  }
-}
-
-@keyframes scaleBack {
-  from {
-    transform: scale(.8);
-    border-radius: 6rem;
-    left: 60%;
-    top: 10%;
-    height: 90%;
-    position: absolute;
-  }
-
-  to {
-    transform: scale(1);
-    border-radius: 0;
-    left: 0;
-    top: 0;
-    height: 100%;
-    position: relative;
-  }
-
 }

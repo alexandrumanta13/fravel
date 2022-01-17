@@ -7,8 +7,7 @@
       @include background-opacity($color-dark, 0.5);
       top: 0;
       left: 0;
-      z-index: 9;
-      //   display: none;
+      z-index: 999;
     }
   }
 
@@ -23,7 +22,7 @@
       border-top-left-radius: 4rem;
       border-top-right-radius: 4rem;
       padding: 3.2rem;
-      z-index: 9;
+      z-index: 1000;
     }
   }
 

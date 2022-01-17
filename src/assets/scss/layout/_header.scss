@@ -6,7 +6,11 @@
   z-index: 1;
 
   &__menu {
-    // margin-left: auto;
+    width: 3.6rem;
+    height: 6.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @include respond(phone) {
