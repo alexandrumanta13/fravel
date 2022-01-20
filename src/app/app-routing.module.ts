@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { I18nResolverService } from './core/services/i18n/i18n-resolver.service';
-import { RoutesResolver } from './core/services/routes/routes.resolver';
-import { BookFlightComponent } from './modules/user/book-flight/book-flight.component';
 import { BookFlightResolver } from './modules/user/book-flight/services/book-flight.resolver';
 
 

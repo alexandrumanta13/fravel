@@ -11,41 +11,41 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/common/', '.json');
-  }
-  
+  return new TranslateHttpLoader(http, './assets/i18n/common/', '.json');
+}
+
 
 @NgModule({
-    declarations: [
-        HeaderComponent,
-        I18nComponent,
-        FooterComponent,
-        SidebarComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({
-            //useDefaultLang: true,
-            loader: {
-              provide: TranslateLoader,
-              useFactory: createTranslateLoader,
-              deps: [HttpClient]
-            },
-            isolate: true
-          }),
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HeaderComponent,
-        FooterComponent,
-        I18nComponent,
-        SidebarComponent
-    ],
-    providers: []
+  declarations: [
+    HeaderComponent,
+    I18nComponent,
+    FooterComponent,
+    SidebarComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({
+      //useDefaultLang: true,
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      },
+      isolate: true
+    }),
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HeaderComponent,
+    FooterComponent,
+    I18nComponent,
+    SidebarComponent,
+  ],
+  providers: []
 })
 export class SharedModule {
 }

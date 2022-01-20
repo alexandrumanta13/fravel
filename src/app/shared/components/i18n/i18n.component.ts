@@ -18,14 +18,14 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
     trigger('toggleLanguage', [
       state('closed', style({
         opacity: 0,
-        bottom: '-45vh'
+        transform: 'translate3d(0, 45vh, 0)'
       })),
       state('open', style({
         opacity: 1,
-        bottom: 0
+        transform: 'translate3d(0, 100vh, 0)'
       })),
       transition('* <=> *', [
-        animate(300)
+        animate(300,)
       ])
     ]),
     trigger('toggleOverlay', [
@@ -103,7 +103,7 @@ export class I18nComponent implements OnInit, OnDestroy {
 
     this.selectedLanguage = language;
 
-    localStorage.setItem('FravelDefaultLanguage', JSON.stringify(language));
+    localStorage.setItem('_frvl_lng_dflt', JSON.stringify(language));
 
     this._I18nService.defaultLanguage$.next(language);
 

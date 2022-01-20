@@ -4,7 +4,9 @@
       position: fixed;
       width: 100%;
       height: 100vh;
-      @include background-opacity($color-dark, 0.5);
+      @include background-opacity($color-dark, 0.8);
+      -webkit-backdrop-filter: blur(.8rem);
+      backdrop-filter: blur(.8rem);
       top: 0;
       left: 0;
       z-index: 999;
@@ -14,8 +16,9 @@
   &__slider {
     @include respond(phone) {
       position: fixed;
-      bottom: -45vh;
+      transition: .8s 10ms cubic-bezier(.68, -.55, .265, 1.55);
       left: 0;
+      bottom: 0;
       background: $color-grey-4;
       width: 100%;
       height: 50vh;
@@ -23,6 +26,21 @@
       border-top-right-radius: 4rem;
       padding: 3.2rem;
       z-index: 1000;
+      transform: translate3d(0, 100vh, 0);
+    }
+
+    &.open {
+      transform: translate3d(0, 0, 0);
+    }
+
+    &:after {
+      content: '';
+      background: $color-grey-4;
+      height: 10rem;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: -10rem;
     }
   }
 
@@ -78,16 +96,17 @@
       &.selected {
         transform: scale(1.5);
         transition: all 280ms;
+
         img {
-            //border: .4rem solid $color-yellow;
+          //border: .4rem solid $color-yellow;
         }
       }
 
       img {
-       // box-shadow: 0 1.6rem 2.4rem rgba($color-yellow, 0.4);
+        // box-shadow: 0 1.6rem 2.4rem rgba($color-yellow, 0.4);
         box-shadow: .8rem .8rem 2.4rem $color-grey-3,
           -.8rem -.8rem 2.4rem $color-white;
-          border-radius: 0.8rem;
+        border-radius: 0.8rem;
       }
     }
   }
@@ -103,33 +122,34 @@
 .currency-select {
   @include respond(phone) {
     margin: auto .8rem;
+
     label {
-        font-family: $sf-medium;
-        margin-bottom: 1.6rem;
-        font-size: 1.9rem;
+      font-family: $sf-medium;
+      margin-bottom: 1.6rem;
+      font-size: 1.9rem;
     }
 
     ul {
-        list-style: none;
-        display: flex;
-        margin: 1.6rem -.8rem;
-        
+      list-style: none;
+      display: flex;
+      margin: 1.6rem -.8rem;
 
-        li {
-            margin: 0 .8rem;
-            padding: 1.6rem;
-            //border: 1px solid $color-grey-1;
-            box-shadow: .8rem .8rem 2.4rem $color-grey-3,
-            -.8rem -.8rem 2.4rem $color-white;
-            border-radius: 0.4rem;
-            
 
-            &.selected {
-                background-color: $color-yellow;
-                //border: 1px solid $color-white;
-                box-shadow: 0 1.6rem 2.4rem rgba($color-yellow, 0.4);
-            }
+      li {
+        margin: 0 .8rem;
+        padding: 1.6rem;
+        //border: 1px solid $color-grey-1;
+        box-shadow: .8rem .8rem 2.4rem $color-grey-3,
+          -.8rem -.8rem 2.4rem $color-white;
+        border-radius: 0.4rem;
+
+
+        &.selected {
+          background-color: $color-yellow;
+          //border: 1px solid $color-white;
+          box-shadow: 0 1.6rem 2.4rem rgba($color-yellow, 0.4);
         }
+      }
     }
   }
 }

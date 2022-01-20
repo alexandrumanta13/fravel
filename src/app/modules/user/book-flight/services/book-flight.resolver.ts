@@ -26,7 +26,9 @@ export class BookFlightResolver implements Resolve<GeoLocation> {
     return this._httpClient.get<GeoLocation>("https://geoip-api.skypicker.com/")
       .pipe(
         tap((location) => {
-          this._BookFlightService.getNearbyAirporst(location, this._I18nService.getDefaultLanguage())
+          if(this._I18nService.getDefaultLanguage()) {
+            this._BookFlightService.getNearbyAirports(location, this._I18nService.getDefaultLanguage())
+          }
         })
       )
   }

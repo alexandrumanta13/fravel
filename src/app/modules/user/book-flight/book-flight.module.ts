@@ -7,10 +7,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/book-flight/', '.json');
+  //return new TranslateHttpLoader(http, './assets/i18n/book-flight/', '.json');
+  return new MultiTranslateHttpLoader(http, [
+    { prefix: './assets/i18n/book-flight/', suffix: '.json' },
+    { prefix: './assets/i18n/common/', suffix: '.json' },
+  ])
 }
 
 
@@ -31,7 +36,7 @@ export function createTranslateLoader(http: HttpClient) {
       },
       isolate: true
     }),
-    
+
   ],
   providers: []
 })

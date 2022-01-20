@@ -12,10 +12,10 @@ import { Language, Languages } from '../../types';
 export class I18nResolverService implements Resolve<Languages[]> {
 
   constructor(
-      private I18nStorageService: I18nStorageService
+      private _I18nStorageService: I18nStorageService
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Languages[] | Observable<Languages[]> | Promise<Languages[]> {
-    return this.I18nStorageService.fetchLanguages();
+    return this._I18nStorageService.fetchLanguages();
   }
 }

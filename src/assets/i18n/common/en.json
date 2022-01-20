@@ -1,5 +1,18 @@
 {
     "BUTTONS": {
         "CURRENCY": "Currency"
+    },
+    "TITLES": {
+        "BOOK_FLIGHT": "Plane tickets"
+    },
+    "GDPR": {
+        "TITLE": "Before you continue to Fravel...",
+        "CONTENT": "By clicking \"I accept all\", you agree to the storage of cookies on your device in order to improve your site navigation, to analyze the use of the site and to help our marketing efforts.",
+        "ACTIONS": {
+            "BUTTONS": {
+                "ACCEPT": "I accept all",
+                "MORE": "Learn more"
+            }
+        }
     }
 }

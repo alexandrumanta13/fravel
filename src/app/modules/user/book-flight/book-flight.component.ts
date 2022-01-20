@@ -1,17 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil, tap, } from 'rxjs/operators';
-import { I18nService } from 'src/app/core/services';
+import { Subject, timer } from 'rxjs';
+import { distinctUntilChanged, take, takeUntil, tap, } from 'rxjs/operators';
+import { I18nService, LoaderService } from 'src/app/core/services';
 
 import { CurrentRoute, Language } from 'src/app/core/types';
 import { RoutesService } from 'src/app/core/services';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BookFlightService } from './services/book-flight.service';
 import { Airports, GeoLocation } from './types';
-import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
-
+import { GdprService } from 'src/app/core/services/gdpr/gdpr.service';
+import { Location } from '@angular/common';
 
 
 
@@ -26,8 +25,8 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   language: string = '';
   routeURL: any
-  currentRoute: CurrentRoute;
   defaultlanguage = this._I18nService.defaultLanguage$;
+  cookieConsent$ = this._GdprService.cookieConsent$;
   tokenUrl = 'https://test.api.amadeus.com/v1/security/oauth2/token';
   token: any;
   location: GeoLocation = {
@@ -44,18 +43,21 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _I18nService: I18nService,
     private _RoutesService: RoutesService,
-    private _BookFlightService: BookFlightService
+    private _BookFlightService: BookFlightService,
+    private _LoaderService: LoaderService,
+    private _GdprService: GdprService,
+    private _UrlLocation: Location
   ) {
 
     this._router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
 
-    this.currentRoute = this._RoutesService.getCurrentRoute();
 
   }
 
   ngOnInit() {
+
     this._I18nService.defaultLanguageChanged$()
       .pipe(distinctUntilChanged())
       .subscribe((lang: any) => {
@@ -63,10 +65,15 @@ export class BookFlightComponent implements OnInit, OnDestroy {
         this._translate.use(lang.key)
         this._translate.setDefaultLang(lang.key);
 
+        this.changeRouteLanguage(lang);
         this.changeApiLanguage(lang);
       });
 
-
+    this._RoutesService.getCurrentRoute$()
+      .pipe(distinctUntilChanged())
+      .subscribe((currentRoute: any) => {
+        this._UrlLocation.replaceState(currentRoute.url);
+      });
 
     this._BookFlightService.getGeolocation$().pipe(
       takeUntil(this._unsubscribeAll))
@@ -80,7 +87,6 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribeAll))
       .subscribe(
         (state) => {
-          console.log(state)
           this.menuOpenState(state);
         }
       );
@@ -94,22 +100,32 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       );
 
 
-    this._BookFlightService.airports$
+    this._BookFlightService.getAirports$()
       .pipe(distinctUntilChanged())
       .subscribe((airporst: Airports) => {
 
         console.log(airporst)
+
       });
   }
 
+  ngAfterViewInit() {
+    this._LoaderService.loader$.next(false);
+    this._GdprService.checkConsent();
+    
+  }
+
   changeApiLanguage(language: Language) {
-    this._BookFlightService.getNearbyAirporst(this.location, language)
+    this._BookFlightService.getNearbyAirports(this.location, language)
+  }
+
+  changeRouteLanguage(language: Language) {
+    this._RoutesService.translateCurrentRoute(this._router.url, language)
   }
 
   menuOpenState(state: string) {
     this.toggleMenuState = state;
   }
-
 
   ngOnDestroy() {
     this._unsubscribeAll.next();
