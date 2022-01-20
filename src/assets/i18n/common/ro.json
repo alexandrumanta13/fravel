@@ -1,5 +1,18 @@
 {
     "BUTTONS": {
         "CURRENCY": "Moneda"
+    },
+    "TITLES": {
+        "BOOK_FLIGHT": "Bilete de avion"
+    },
+    "GDPR": {
+        "TITLE": "Inainte de a continua pe Fravel...",
+        "CONTENT": "Făcând clic pe \"Acceptă toate\", sunteți de acord cu stocarea cookie-urilor pe dispozitivul dvs. pentru a îmbunătăți navigarea pe site, pentru a analiza utilizarea site-ului și pentru a ne ajuta in activitatea noastră de marketing.",
+        "ACTIONS": {
+            "BUTTONS": {
+                "ACCEPT": "Accept toate",
+                "MORE": "Aflați mai multe"
+            }
+        }
     }
 }

@@ -98,6 +98,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "prefix": "app",
             "styles": [
               "src/styles.scss"
             ],

@@ -7,6 +7,13 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/common/', '.json');
+}
 
 
 
@@ -21,7 +28,14 @@ import { AppRoutingModule } from './app-routing.module';
     
     // Core module of your application
     CoreModule,
-    
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      },
+   
+    }),
   ],
   providers: [],
   

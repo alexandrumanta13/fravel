@@ -20,7 +20,7 @@ export class BookFlightService {
   ) { }
 
 
-  getNearbyAirporst(location: GeoLocation, defaultLanguage: Language): Observable<Airports> {
+  getNearbyAirports(location: GeoLocation, defaultLanguage: Language): Observable<Airports> {
     this.geolocation$.next(location);
 
     const headers = new HttpHeaders({
@@ -56,6 +56,10 @@ export class BookFlightService {
 
   getGeolocation$(): Observable<GeoLocation> {
     return this.geolocation$.asObservable();
+  }
+
+  getAirports$(): Observable<Airports> {
+    return this.airports$.asObservable();
   }
 
   openSideMenu$(): Observable<string> {

@@ -1,6 +1,6 @@
 <div class="language-selector__container">
   <div *ngIf="state === 'open'" class="language-selector__overlay" [@toggleOverlay]="state"></div>
-  <div class="language-selector__slider" [@toggleLanguage]="state">
+  <div class="language-selector__slider" [class.open]="state === 'open'">
     <div class="language-selector__slider-inner">
       <div class="language-select">
         <ng-container *ngFor="let language of languages">

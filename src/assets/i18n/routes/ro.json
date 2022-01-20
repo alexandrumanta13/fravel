@@ -1,11 +1,6 @@
 {
-    "titles": {
-        "about": "About Us",
-        "users": {
-            "root": "Users",
-            "profile": "User Profile",
-            "myaccount": "List Users"
-        }
+    "TITLES": {
+        "BOOK_FLIGHT": "Bilete de avion"
     },
     "routes": {
         "book-flight": "bilete-avion"

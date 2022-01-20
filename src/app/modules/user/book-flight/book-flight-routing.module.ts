@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GdprResolver } from 'src/app/core/services/gdpr/gdpr.resolver';
 import { I18nResolverService } from 'src/app/core/services/i18n/i18n-resolver.service';
 import { RoutesResolver } from 'src/app/core/services/routes/routes.resolver';
 import { BookFlightComponent } from './book-flight.component';
 
 const routes: Routes = [
 
-  { path: '', pathMatch: 'full', component: BookFlightComponent, data: { title: 'BOOK-FILGHT.TITLE' }, resolve: [I18nResolverService, RoutesResolver] },
+  { path: '', pathMatch: 'full', component: BookFlightComponent, data: { title: 'asdad' }, resolve: [RoutesResolver] },
   // { path: 'book-flight', component: BookFlightComponent, data: { title: 'BOOK-FILGHT.TITLE' }, resolve: [I18nResolverService, RoutesResolver] },
   // { path: 'bilete-avion', component: BookFlightComponent, data: { title: 'BOOK-FILGHT.TITLE' }, resolve: [I18nResolverService, RoutesResolver] },
 
