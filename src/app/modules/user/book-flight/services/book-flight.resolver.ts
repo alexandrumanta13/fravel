@@ -9,6 +9,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
 import { GeoLocation } from '../types';
+import { BookFlightStorageService } from './book-flight-storage.service';
 import { BookFlightService } from './book-flight.service';
 
 @Injectable({
@@ -17,8 +18,9 @@ import { BookFlightService } from './book-flight.service';
 export class BookFlightResolver implements Resolve<GeoLocation> {
   constructor(
     private _BookFlightService: BookFlightService,
+    private _BookFlightStorageService: BookFlightStorageService,
     private _I18nService: I18nService,
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): GeoLocation | Observable<GeoLocation> | Promise<GeoLocation> {
@@ -28,6 +30,7 @@ export class BookFlightResolver implements Resolve<GeoLocation> {
         tap((location) => {
           if(this._I18nService.getDefaultLanguage()) {
             this._BookFlightService.getNearbyAirports(location, this._I18nService.getDefaultLanguage())
+            this._BookFlightStorageService.fetchTopDestinations()
           }
         })
       )

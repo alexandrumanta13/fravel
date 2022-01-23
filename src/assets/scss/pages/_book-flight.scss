@@ -1,10 +1,4 @@
-.top-destinations {
-  @include respond(phone) {
-    margin-top: -6.4rem;
-    background-color: #fff;
-    height: 50%;
-  }
-}
+
 
 .book-flight {
   &__container {

@@ -105,10 +105,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this._I18nService.defaultLanguageChanged$()
       .pipe(distinctUntilChanged())
       .subscribe((lang: Language) => {
-        console.log(lang)
         this.translate.use(lang.key)
         this.translate.setDefaultLang(lang.key);
-
       });
     this._GdprService.getConsent()
       .pipe(distinctUntilChanged())
@@ -124,12 +122,12 @@ export class AppComponent implements OnInit, OnDestroy {
     //   .subscribe((state: boolean) => {
     //     // this is for animation only
     //     this.loading = state;
-    //     console.log(state)
+    // 
     //     if (state == false) {
 
-    //       console.log(state)
+    //   
     //       this.isLoaded = true;
-    //       console.log(this.isLoaded)
+    //   
           
 
     //     }

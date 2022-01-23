@@ -1,19 +1,24 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, throwError } from 'rxjs';
 import { catchError, concatMap, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
 import { Language } from 'src/app/core/types';
 import { environment } from 'src/environments/environment.prod';
-import { Airports, GeoLocation } from '../types';
+import { Airports, GeoLocation, TopDestinations } from '../types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookFlightService {
   geolocation$ = new BehaviorSubject<GeoLocation>({} as GeoLocation);
-  airports$ = new BehaviorSubject<any>({});
+  airports$ = new BehaviorSubject<any>([]);
   menuState$ = new BehaviorSubject<string>('');
+
+  destinationsChanged$ = new BehaviorSubject<TopDestinations[]>([]);
+  destinations$ = new BehaviorSubject<TopDestinations[]>([]);
+  private destinations: TopDestinations[] = [];
+  airports: Airports[] = [];
 
   constructor(
     private _httpClient: HttpClient
@@ -49,6 +54,7 @@ export class BookFlightService {
           return throwError(error);
         })
       ).subscribe(airports => {
+        this.airports = airports.locations;
         this.airports$.next(airports.locations)
       })
     return this.airports$.asObservable();
@@ -58,12 +64,30 @@ export class BookFlightService {
     return this.geolocation$.asObservable();
   }
 
+  getAirports() {
+    return this.airports.slice();
+  }
+
   getAirports$(): Observable<Airports> {
     return this.airports$.asObservable();
   }
 
   openSideMenu$(): Observable<string> {
     return this.menuState$.asObservable();
+  }
+
+  setTopDestinations(destinations: TopDestinations[]) {
+    this.destinations = destinations;
+    this.destinationsChanged$.next(this.destinations.slice());
+    this.destinations$.next(this.destinations);
+  }
+
+  getTopDestinations$(): Observable<TopDestinations[]> {
+    return this.destinations$.asObservable();
+  }
+
+  getTopDestinations() {
+    return this.destinations.slice();
   }
 
 }

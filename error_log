@@ -1,0 +1,13 @@
+[20-Jan-2022 21:14:23 Europe/Bucharest] PHP Warning:  mysqli::__construct(): (HY000/1044): Access denied for user 'r93806frav_userR'@'localhost' to database 'r93806frav_romstal' in /home4/r93806frav/public_html/romstal/insert.php on line 7
+[20-Jan-2022 21:14:48 Europe/Bucharest] PHP Warning:  fopen(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/insert.php on line 13
+[20-Jan-2022 21:14:48 Europe/Bucharest] PHP Warning:  file_get_contents(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/insert.php on line 14
+[20-Jan-2022 21:14:48 Europe/Bucharest] PHP Warning:  unlink(): No such file or directory in /home4/r93806frav/public_html/romstal/insert.php on line 32
+[20-Jan-2022 21:16:17 Europe/Bucharest] PHP Warning:  fopen(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/insert.php on line 13
+[20-Jan-2022 21:16:17 Europe/Bucharest] PHP Warning:  file_get_contents(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/insert.php on line 14
+[20-Jan-2022 21:16:17 Europe/Bucharest] PHP Warning:  unlink(): No such file or directory in /home4/r93806frav/public_html/romstal/insert.php on line 32
+[20-Jan-2022 21:18:36 Europe/Bucharest] PHP Warning:  fopen(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/upload.php on line 13
+[20-Jan-2022 21:18:36 Europe/Bucharest] PHP Warning:  file_get_contents(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/upload.php on line 14
+[20-Jan-2022 21:18:36 Europe/Bucharest] PHP Warning:  unlink(): No such file or directory in /home4/r93806frav/public_html/romstal/upload.php on line 32
+[20-Jan-2022 21:19:12 Europe/Bucharest] PHP Warning:  fopen(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/upload.php on line 13
+[20-Jan-2022 21:19:12 Europe/Bucharest] PHP Warning:  file_get_contents(): Filename cannot be empty in /home4/r93806frav/public_html/romstal/upload.php on line 14
+[20-Jan-2022 21:19:12 Europe/Bucharest] PHP Warning:  unlink(): No such file or directory in /home4/r93806frav/public_html/romstal/upload.php on line 32
