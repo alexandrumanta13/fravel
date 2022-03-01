@@ -1,0 +1,8 @@
+<app-header></app-header>
+<app-langauge></app-langauge>
+<router-outlet *ngIf="true"></router-outlet>
+<!-- <app-footer></app-footer> -->
+<app-sidebar [class.open]="toggleMenuState === 'open'"></app-sidebar>
+<app-loader *ngIf="(loader$ | async)" [class.loading]="loading"></app-loader>
+
+<app-gdpr *ngIf="!(cookieConsent$ | async)" [class.show]="showGdpr | async"></app-gdpr>

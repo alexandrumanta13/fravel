@@ -18,10 +18,10 @@
         </ul>
       </div>
       <div class="confirm">
-        <button (click)="setLanguage(selectedLanguage); toggleLanguage()" class="btn btn-primary btn-full-width">{{selectedLanguage.language}}
+        <button (click)="setLanguage(selectedLanguage); toggleLanguage('closed')" class="btn btn-primary btn-full-width">{{selectedLanguage.language}}
           ({{selectedLanguage.defaultCurrency}})</button>
       </div>
-      <div class="language-selector__close" (click)="toggleLanguage()">
+      <div class="language-selector__close" (click)="toggleLanguage('closed')">
         <img src="/assets/images/icons/close.svg" [@close]="state" alt="Close language selector">
       </div>
     </div>

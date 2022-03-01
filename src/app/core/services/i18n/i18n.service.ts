@@ -9,10 +9,12 @@ import { Language, Languages } from '../../types';
 })
 export class I18nService {
   languagesChanged$ = new BehaviorSubject<Languages[]>([]);
-  defaultLanguage$ = new Subject<Language>();
+  defaultLanguage$ = new BehaviorSubject<Languages>({} as Language);
   items$ = this.defaultLanguage$.asObservable();
   private languages: Languages[] = [];
   existingDefaultLangauge: Language = JSON.parse(localStorage.getItem('_frvl_lng_dflt') || '{}');
+  languageState$ = new BehaviorSubject<string>('');
+  defaultLanguage: any;
 
   constructor() { }
 
@@ -23,10 +25,9 @@ export class I18nService {
     if (Object.keys(this.existingDefaultLangauge).length) {
       this.defaultLanguage$.next(this.existingDefaultLangauge);
     } else {
-      this.defaultLanguage$.next(this.languages.slice().find(language => language.isDefault === true));
+      let language: Language = this.languages.slice().find(language => language.isDefault === true) || {} as Language;
+      this.defaultLanguage$.next(language);
     }
-
-    
   }
 
   defaultLanguageChanged$(): Observable<Language> {
@@ -44,5 +45,10 @@ export class I18nService {
 
   getLanguages() {
     return this.languages.slice();
+  }
+  
+
+  toogleState$(): Observable<string> {
+    return this.languageState$.asObservable();
   }
 }

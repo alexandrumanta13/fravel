@@ -1,19 +1,27 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, throwError } from 'rxjs';
 import { catchError, concatMap, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
 import { Language } from 'src/app/core/types';
 import { environment } from 'src/environments/environment.prod';
-import { Airports, GeoLocation } from '../types';
+import { Airports, GeoLocation, TopDestinations } from '../types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookFlightService {
   geolocation$ = new BehaviorSubject<GeoLocation>({} as GeoLocation);
-  airports$ = new BehaviorSubject<any>({});
-  menuState$ = new BehaviorSubject<string>('');
+  airports$ = new BehaviorSubject<any>([]);
+  menuState$ = new BehaviorSubject<string>('closed');
+
+  departureLocation$ = new BehaviorSubject<any>([]);
+  airports: Airports[] = [];
+
+  destinationsChanged$ = new BehaviorSubject<TopDestinations[]>([]);
+  destinations$ = new BehaviorSubject<TopDestinations[]>([]);
+  private destinations: TopDestinations[] = [];
+
 
   constructor(
     private _httpClient: HttpClient
@@ -21,6 +29,7 @@ export class BookFlightService {
 
 
   getNearbyAirports(location: GeoLocation, defaultLanguage: Language): Observable<Airports> {
+  
     this.geolocation$.next(location);
 
     const headers = new HttpHeaders({
@@ -49,7 +58,10 @@ export class BookFlightService {
           return throwError(error);
         })
       ).subscribe(airports => {
+        console.log(airports)
+        this.airports = airports.locations;
         this.airports$.next(airports.locations)
+        this.departureLocation$.next(airports.locations)
       })
     return this.airports$.asObservable();
   }
@@ -58,12 +70,34 @@ export class BookFlightService {
     return this.geolocation$.asObservable();
   }
 
+  getAirports() {
+    return this.airports.slice();
+  }
+
   getAirports$(): Observable<Airports> {
     return this.airports$.asObservable();
   }
 
+  getDepartureLocation$(): Observable<Airports> {
+    return this.departureLocation$.asObservable();
+  }
+
   openSideMenu$(): Observable<string> {
     return this.menuState$.asObservable();
+  }
+
+  setTopDestinations(destinations: TopDestinations[]) {
+    this.destinations = destinations;
+    this.destinationsChanged$.next(this.destinations.slice());
+    this.destinations$.next(this.destinations);
+  }
+
+  getTopDestinations$(): Observable<TopDestinations[]> {
+    return this.destinations$.asObservable();
+  }
+
+  getTopDestinations() {
+    return this.destinations.slice();
   }
 
 }

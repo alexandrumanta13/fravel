@@ -9,6 +9,7 @@
     background: #A6C5CD;
     box-shadow: 0.4rem 0.4rem 0.8rem #bac5c8, -0.4rem -0.4rem 0.8rem #fcffff;
     overflow: hidden;
+    -webkit-backface-visibility: hidden;
     transition: all 600ms;
 
     &.menu-open {

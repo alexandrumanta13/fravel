@@ -9,6 +9,8 @@
 html {
   // This defines what 1rem is
   font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+  min-height: calc(100% + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 
   @include respond(tab-land) {
     // width < 1200?
@@ -34,6 +36,7 @@ body {
   font-family: $sf-regular;
   color: $color-deep-dark;
   overflow: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 ::selection {

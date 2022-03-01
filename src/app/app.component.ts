@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { I18nService, I18nStorageService, LoaderService } from './core/services';
+import { I18nService, I18nStorageService, LoaderService, RoutesStorageService } from './core/services';
 import { AppRoutes, Language, Languages } from './core/types';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { BehaviorSubject, Subscription, timer } from 'rxjs';
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  route: AppRoutes[] = [];
+  //route: AppRoutes[] = [];
   loading: boolean = true;
   isLoaded: boolean = false;
   cookieConsent$ = this._GdprService.cookieConsent$
@@ -73,20 +73,57 @@ export class AppComponent implements OnInit, OnDestroy {
   //   }
   // ]
 
-
-
-
-
-  constructor(
-    public translate: TranslateService,
-    private _I18nService: I18nService,
-    private I18nStorageService: I18nStorageService,
-    private _LoaderService: LoaderService,
-    private _GdprService: GdprService,
-    private router: Router
-  ) {
-    this.route = [{
-      route: 'book_flight',
+  // languages: Languages[] = [
+  //   {
+  //     flag: "assets/images/flags/ro.svg",
+  //     isDefault: false,
+  //     key: "ro",
+  //     language: "Romana",
+  //     locale: "ro-RO",
+  //     currency: [
+  //       {
+  //         value: "RON",
+  //         isDefault: true
+  //       },
+  //       {
+  //         value: "EUR",
+  //         isDefault: false
+  //       },
+  //       {
+  //         value: "GBP",
+  //         isDefault: false
+  //       },
+  //       {
+  //         value: "USD",
+  //         isDefault: false
+  //       },
+  //     ]
+  //   },
+  //   {
+  //     flag: "assets/images/flags/en.svg",
+  //     isDefault: true,
+  //     key: "en",
+  //     language: "Engleza",
+  //     locale: "en-US",
+  //     currency: [
+  //       {
+  //         value: "EUR",
+  //         isDefault: true
+  //       },
+  //       {
+  //         value: "GBP",
+  //         isDefault: false
+  //       },
+  //       {
+  //         value: "USD",
+  //         isDefault: false
+  //       }
+  //     ]
+  //   }
+  // ]
+  routes: AppRoutes[] = [
+    {
+    route: 'book_flight',
       translate_route: [
         {
           url: '/book-flight',
@@ -97,18 +134,42 @@ export class AppComponent implements OnInit, OnDestroy {
           language_key: 'ro'
         },
       ]
-    }]
-  }
+    },
+    {
+      route: 'select_departure',
+      translate_route: [
+        {
+          url: '/book-flight/select-departure',
+          language_key: 'en',
+        },
+        {
+          url: '/bilete-avion/selecteaza-plecare',
+          language_key: 'ro',
+        }
+      ]
+    }
+  ];
+
+
+
+
+  constructor(
+    public translate: TranslateService,
+    private _I18nService: I18nService,
+    private I18nStorageService: I18nStorageService,
+    private _LoaderService: LoaderService,
+    private _GdprService: GdprService,
+    private _RoutesStorageService: RoutesStorageService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
 
     this._I18nService.defaultLanguageChanged$()
       .pipe(distinctUntilChanged())
       .subscribe((lang: Language) => {
-        console.log(lang)
         this.translate.use(lang.key)
         this.translate.setDefaultLang(lang.key);
-
       });
     this._GdprService.getConsent()
       .pipe(distinctUntilChanged())
@@ -124,19 +185,19 @@ export class AppComponent implements OnInit, OnDestroy {
     //   .subscribe((state: boolean) => {
     //     // this is for animation only
     //     this.loading = state;
-    //     console.log(state)
+    // 
     //     if (state == false) {
 
-    //       console.log(state)
+    //   
     //       this.isLoaded = true;
-    //       console.log(this.isLoaded)
-          
+    //   
+
 
     //     }
 
     //   });
     //this.I18nStorageService.storeLanguages(this.languages)
-    //this.RoutesStorageService.storeRoutes(this.route)
+    // this._RoutesStorageService.storeRoutes(this.routes)
 
   }
 
@@ -148,7 +209,7 @@ export class AppComponent implements OnInit, OnDestroy {
     //   //this.router.navigate(['/bilete-avion']);
     // });
 
-   
+
   }
 
 

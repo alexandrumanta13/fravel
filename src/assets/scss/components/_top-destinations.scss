@@ -1,0 +1,80 @@
+.top-destinations {
+
+  @include respond(phone) {
+    margin-top: -6.4rem;
+    background-color: #fff;
+    height: calc(50% + 6.4rem);
+    padding-top: 14rem;
+  }
+
+  @include respond(small-phone) {
+    padding-top: 12rem;
+  }
+
+  &__inner {
+    @include respond(phone) {
+      padding: 1.6rem 1.6rem 10rem 1.6rem;
+      display: flex;
+      align-items: center;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      -webkit-backface-visibility: hidden;
+    }
+
+    @include respond(small-phone) {
+      padding: 1.6rem 1.6rem 3rem 1.6rem;
+    }
+  }
+
+  &__title {
+    color: $color-dark;
+    font-family: $sf-bold;
+
+    @include respond(phone) {
+      font-size: 19px;
+      margin-left: 3.2rem;
+    }
+  }
+
+  &__list {
+    @include respond(phone) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  &__item {
+    width: 180px;
+    height: 230px;
+    position: relative;
+    margin: 0 1.6rem;
+    box-shadow: rgb(166 197 205 / 25%) 0px 50px 100px -20px, rgb(166 197 205 / 30%) 0px 30px 60px -30px;
+    clip-path: inset(0 round 16px 19px 16px 16px);
+    background-color: $color-sky-blue;
+    padding: 3.2rem;
+
+    @include respond(small-phone) {
+      height: 200px;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: .8;
+      z-index: 1;
+    }
+
+    h4 {
+      color: $color-white;
+      font-family: $sf-bold;
+      font-size: 24px;
+      position: relative;
+      z-index: 2;
+    }
+  }
+}

@@ -35,6 +35,7 @@ export class RoutesStorageService {
       )
       .pipe(
         tap(routes => {
+          console.log(this._I18nService.getDefaultLanguage())
           this._RoutesService.setRoutes(routes, url, this._I18nService.getDefaultLanguage());
         })
       )

@@ -8,6 +8,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
+import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -24,7 +27,6 @@ export function createTranslateLoader(http: HttpClient) {
     BookFlightComponent,
   ],
   imports: [
-    CommonModule,
     SharedModule,
     BookFlightRoutingModule,
     TranslateModule.forChild({

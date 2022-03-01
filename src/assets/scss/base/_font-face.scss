@@ -31,3 +31,111 @@
   font-style: normal;
   font-display: swap;
 }
+
+
+@font-face {
+  font-family: '#{$icons-font-family}';
+  src:  url('#{$font-path}/#{$icons-font-family}.eot?jq2qox');
+  src:  url('#{$font-path}/#{$icons-font-family}.eot?jq2qox#iefix') format('embedded-opentype'),
+    url('#{$font-path}/#{$icons-font-family}.ttf?jq2qox') format('truetype'),
+    url('#{$font-path}/#{$icons-font-family}.woff?jq2qox') format('woff'),
+    url('#{$font-path}/#{$icons-font-family}.svg?jq2qox##{$icons-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icons-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-edit {
+  &:before {
+    content: $icon-edit;     
+    color: #fff;
+  }
+}
+.icon-arrow-right {
+  &:before {
+    content: $icon-arrow-right;     
+    color: #fff;
+  }
+}
+.icon-plane-filled {
+  &:before {
+    content: $icon-plane-filled;     
+    color: #fff;
+  }
+}
+.icon-boarding-cards {
+  &:before {
+    content: $icon-boarding-cards; 
+  }
+}
+.icon-close {
+  &:before {
+    content: $icon-close; 
+  }
+}
+.icon-credit-card {
+  &:before {
+    content: $icon-credit-card; 
+  }
+}
+.icon-email {
+  &:before {
+    content: $icon-email; 
+  }
+}
+.icon-explore {
+  &:before {
+    content: $icon-explore; 
+  }
+}
+.icon-logout {
+  &:before {
+    content: $icon-logout; 
+  }
+}
+.icon-notifications {
+  &:before {
+    content: $icon-notifications; 
+  }
+}
+.icon-plane {
+  &:before {
+    content: $icon-plane; 
+  }
+}
+.icon-profile {
+  &:before {
+    content: $icon-profile; 
+  }
+}
+.icon-saved-destinations {
+  &:before {
+    content: $icon-saved-destinations; 
+  }
+}
+.icon-settings {
+  &:before {
+    content: $icon-settings; 
+  }
+}
+.icon-support {
+  &:before {
+    content: $icon-support; 
+  }
+}
+
