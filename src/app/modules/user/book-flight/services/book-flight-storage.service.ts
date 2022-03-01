@@ -31,6 +31,6 @@ export class BookFlightStorageService {
           this._BookFlightSerivce.setTopDestinations(destinations);
         })
       )
-      .subscribe();
+     
   }
 }
