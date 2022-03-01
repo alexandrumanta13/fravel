@@ -1,4 +1,1 @@
 <router-outlet></router-outlet>
-<app-loader *ngIf="(loader$ | async)" [class.loading]="loading"></app-loader>
-
-<app-gdpr *ngIf="!(cookieConsent$ | async)" [class.show]="showGdpr | async"></app-gdpr>

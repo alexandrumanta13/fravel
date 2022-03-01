@@ -60,6 +60,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-edit {
+  &:before {
+    content: $icon-edit;     
+    color: #fff;
+  }
+}
 .icon-arrow-right {
   &:before {
     content: $icon-arrow-right;     

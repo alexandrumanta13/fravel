@@ -19,6 +19,7 @@
     position: absolute;
     background: #fff;
     overflow: hidden;
+    -webkit-backface-visibility: hidden;
     box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
 

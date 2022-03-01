@@ -3,6 +3,7 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 app-loader {

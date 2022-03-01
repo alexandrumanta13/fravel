@@ -12,6 +12,7 @@ import { BookFlightService } from 'src/app/modules/user/book-flight/services/boo
 })
 export class HeaderComponent implements OnInit {
   state: string = 'closed';
+  languageState: string = 'closed';
   defaultFlag: Language = this._I18nService.getDefaultLanguage();
 
   constructor(
@@ -29,7 +30,13 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.state = (this.state === 'closed' ? 'open' : 'closed');
+    console.log(this.state)
     this._BookFlightService.menuState$.next(this.state)
+  }
+
+  toggleLanguage() {
+    this.languageState = (this.state === 'closed' ? 'open' : 'closed');
+    this._I18nService.languageState$.next(this.languageState);
   }
 
 }

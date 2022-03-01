@@ -19,60 +19,82 @@ export class RoutesService {
     url: '',
     language_key: ''
   }
+  private currentLanguage: Language = {} as Language;
 
   constructor(
-    private location: Location, 
-    private router: Router, 
+    private location: Location,
+    private router: Router,
     public translate: TranslateService,
     private _UrlLocation: Location
-    ) { 
-   
+  ) {
+
   }
 
   setRoutes(routes: AppRoutes[], url: string, defaultLanguage: Language) {
     this.routes = routes;
 
-    const getCurrentUrl = this.routes.slice()
-      .map(route => {
-        route.translate_route
-          .filter(route => route.url === url)
-        return route
+    let getCurrentUrl: AppRoutes = {} as AppRoutes;
+
+    this.routes.slice()
+      .map(routes => {
+        routes.translate_route
+          .filter(route => {
+            if (route.url === url) {
+              getCurrentUrl = { ...routes };
+            }
+          })
       })
 
-    const checkIfURLisDefaultLang = getCurrentUrl[0].translate_route.filter(route => route.language_key === defaultLanguage.key)
-
+    const checkIfURLisDefaultLang = getCurrentUrl.translate_route.filter(route => route.language_key === defaultLanguage.key)
 
     this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
     this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
+    this.currentLanguage.key = checkIfURLisDefaultLang[0].language_key;
 
     this.routesChanged$.next(this.routes.slice());
     this.currentRoute$.next(checkIfURLisDefaultLang[0]);
 
-    // if (checkIfURLisDefaultLang[0].url != url) {
-    //   this._UrlLocation.replaceState(checkIfURLisDefaultLang[0].url );
-    // }
+  
+    if(this.currentRouteSet.url != url) { 
+      setTimeout(() => {
+        this._UrlLocation.replaceState(this.currentRouteSet.url);
+      }, 200)
+    }
+
   }
 
-  manageRoutesLanguage() {
-
-  }
 
   translateCurrentRoute(url: string, defaultLanguage: Language) {
 
-    const getCurrentUrl = this.routes.slice()
-    .map(route => {
-      route.translate_route
-        .filter(route => route.url === url)
-      return route
-    })
+    let getCurrentUrl: AppRoutes = {} as AppRoutes;
 
-    const checkIfURLisDefaultLang = getCurrentUrl[0].translate_route.filter(route => route.language_key === defaultLanguage.key);
+    this.routes.slice()
+      .map(routes => {
+        routes.translate_route
+          .filter(route => {
+            if (route.url === url) {
+              getCurrentUrl = { ...routes };
+            }
+          })
+      })
 
-    this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
-    this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
+    const checkIfURLisDefaultLang = getCurrentUrl.translate_route.filter(route => route.language_key === defaultLanguage.key);
 
-    this.routesChanged$.next(this.routes.slice());
-    this.currentRoute$.next(checkIfURLisDefaultLang[0]);
+
+
+    if (this.currentLanguage.key != defaultLanguage.key) {
+
+      this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
+      this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
+
+      this.routesChanged$.next(this.routes.slice());
+      this.currentRoute$.next(checkIfURLisDefaultLang[0]);
+
+      setTimeout(() => {
+        this._UrlLocation.replaceState(this.currentRouteSet.url);
+      }, 200)
+    }
+
   }
 
   getRoutes() {

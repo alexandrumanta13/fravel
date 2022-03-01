@@ -1,15 +1,11 @@
-
-<app-header></app-header>
-<!-- <h2>{{ 'BOOK-FILGHT.TITLE' | translate }}</h2> -->
-
 <div class="book-flight__container">
-    <div class="book-flight__inner" [ngClass]="{'open':toggleMenuState === 'open'}">
+    <div class="book-flight__inner" [class.open]="toggleMenuState === 'open'">
         <div class="destination-selector">
             <div class="blurry-overlay"></div>
             <div class="destination-selector__inner">
-                <div class="departure-city">
-                    <h3 *ngIf="!selectedAirport">{{ 'BOOK-FILGHT.WHERE_FROM_FLY' | translate}}</h3>
-                    <h3 *ngIf="selectedAirport">{{selectedAirport.city.name}}</h3>
+                <div class="departure-city" routerLink="/bilete-avion/selecteaza-plecare">
+                    <h3 *ngIf="selectedAirport.length < 1 || !selectedAirport">{{ 'BOOK-FILGHT.WHERE_FROM_FLY' | translate}} <i class="icon-edit"></i></h3>
+                    <h3 *ngIf="selectedAirport.length > 0 && selectedAirport[0] != undefined">{{selectedAirport[0].city.name}} <i class="icon-edit"></i></h3>
                 </div>
                 <aside class="border"><i class="icon-plane-filled"></i></aside>
                 <div class="destination-city">
@@ -33,7 +29,7 @@
         <div class="top-destinations">
             <h4 class="top-destinations__title">{{ 'BOOK-FILGHT.TOP_DESTINATIONS.TITLE' | translate}}</h4>
             <div class="top-destinations__inner">
-                <ul class="top-destinations__list">
+                <ul class="top-destinations__list" *ngIf="selectedTopDestinations">
                     <li class="top-destinations__item" *ngFor="let topDestination of selectedTopDestinations">
                         <img src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{topDestination.city_id}}.jpg&fit=cover&width=180&height=230&dpr=1" alt="">
                         <h4>{{topDestination.city_name}}</h4>
@@ -41,10 +37,10 @@
                 </ul>
             </div>
         </div>
-        <app-footer></app-footer>
+        
     </div>
    
 </div>
-<app-sidebar [class.open]="toggleMenuState === 'open'"></app-sidebar>
+
 
 

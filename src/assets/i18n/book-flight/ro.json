@@ -2,7 +2,7 @@
     "BOOK-FILGHT": {
         "TITLE": "Bilete de avion",
         "WHERE_TO_FLY": "Unde vrei să călătorești?",
-        "WHERE_From_FLY": "Departure from?",
+        "WHERE_FROM_FLY": "Departure from?",
         "TOP_DESTINATIONS": {
             "TITLE": "Destinatii populare"
         }

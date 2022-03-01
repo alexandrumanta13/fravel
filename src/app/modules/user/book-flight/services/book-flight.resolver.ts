@@ -24,7 +24,7 @@ export class BookFlightResolver implements Resolve<GeoLocation> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): GeoLocation | Observable<GeoLocation> | Promise<GeoLocation> {
-
+    
     return this._httpClient.get<GeoLocation>("https://geoip-api.skypicker.com/")
       .pipe(
         tap((location) => {
