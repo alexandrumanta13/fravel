@@ -28,6 +28,8 @@ export class I18nService {
       let language: Language = this.languages.slice().find(language => language.isDefault === true) || {} as Language;
       this.defaultLanguage$.next(language);
     }
+
+    this.getDefaultLanguage();
   }
 
   defaultLanguageChanged$(): Observable<Language> {

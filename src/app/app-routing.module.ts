@@ -21,7 +21,7 @@ export const routes: Routes = [
   // Landing routes
   { 
     path: '', 
-    //resolve: [I18nResolverService, RoutesResolver],
+    //resolve: [I18nResolverService, BookFlightResolver, RoutesResolver],
     data: { layout: 'classic' } ,
     component: LayoutComponent,
     children: [
