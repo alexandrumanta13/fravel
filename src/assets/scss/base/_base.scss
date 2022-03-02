@@ -9,8 +9,11 @@
 html {
   // This defines what 1rem is
   font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
-  min-height: calc(100% + env(safe-area-inset-top));
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+ // min-height: calc(100% + env(safe-area-inset-top));
+ // padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+
+  min-height: -webkit-fill-available; 
+  height: calc(var(--vh, 1vh) * 100);
 
   @include respond(tab-land) {
     // width < 1200?
@@ -30,6 +33,7 @@ html {
 body {
   box-sizing: border-box;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   z-index: 9;
   font-size: $default-font-size;

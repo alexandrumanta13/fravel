@@ -5,6 +5,8 @@ import { AppRoutes, CurrentRoute } from '../../types';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { I18nService } from '..';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +27,13 @@ export class RoutesService {
     private location: Location,
     private router: Router,
     public translate: TranslateService,
-    private _UrlLocation: Location
+    private _UrlLocation: Location,
+    private _I18nService: I18nService
   ) {
 
   }
 
-  setRoutes(routes: AppRoutes[], url: string, defaultLanguage: Language) {
+  setRoutes(routes: AppRoutes[], url: string) {
     this.routes = routes;
 
     let getCurrentUrl: AppRoutes = {} as AppRoutes;
@@ -45,21 +48,28 @@ export class RoutesService {
           })
       })
 
-    const checkIfURLisDefaultLang = getCurrentUrl.translate_route.filter(route => route.language_key === defaultLanguage.key)
+    this._I18nService.defaultLanguageChanged$().pipe(
+      distinctUntilChanged(),
+      tap(defaultLanguage => {
+        if (Object.keys(defaultLanguage).length > 0) {
+          const checkIfURLisDefaultLang = getCurrentUrl.translate_route.filter(route => route.language_key === defaultLanguage.key)
 
-    this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
-    this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
-    this.currentLanguage.key = checkIfURLisDefaultLang[0].language_key;
+          this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
+          this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
+          this.currentLanguage.key = checkIfURLisDefaultLang[0].language_key;
 
-    this.routesChanged$.next(this.routes.slice());
-    this.currentRoute$.next(checkIfURLisDefaultLang[0]);
+          this.routesChanged$.next(this.routes.slice());
+          this.currentRoute$.next(checkIfURLisDefaultLang[0]);
 
-  
-    if(this.currentRouteSet.url != url) { 
-      setTimeout(() => {
-        this._UrlLocation.replaceState(this.currentRouteSet.url);
-      }, 200)
-    }
+          if (this.currentRouteSet.url != url) {
+            setTimeout(() => {
+              this._UrlLocation.replaceState(this.currentRouteSet.url);
+            }, 200)
+          }
+        }
+
+      })
+    ).subscribe();
 
   }
 

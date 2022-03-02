@@ -20,15 +20,13 @@ export class I18nStorageService {
         environment.FIREBASE_ENDPOINT + 'languages.json',
         languages
       )
-      .subscribe(response => {
-        console.log(response);
-      });
+      .subscribe();
   }
 
   fetchLanguages() {
     return this._httpClient
       .get<Languages[]>(
-        environment.FIREBASE_ENDPOINT + 'languages.json',
+        environment.apiUrl + 'languages',
       )
       .pipe(
         tap(languages => {

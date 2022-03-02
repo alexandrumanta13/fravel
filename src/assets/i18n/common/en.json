@@ -14,5 +14,10 @@
                 "MORE": "Learn more"
             }
         }
+    },
+    "LANGUAGE_SELECTOR": {
+        "LABELS": {
+            "CURRENCY": "Currency"
+        }
     }
 }

@@ -27,15 +27,15 @@ export class SelectDepartureComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-   
+
     this._BookFlightService.getDepartureLocation$()
       .pipe(distinctUntilChanged())
       .subscribe((airport: any) => {
-       console.log(airport)
+        //console.log(airport)
       });
   }
 
- 
+
 
 
   ngOnDestroy() {

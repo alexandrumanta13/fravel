@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { I18nService, RoutesService } from '..';
-import { Language } from '../../types';
 import { AppRoutes } from '../../types';
 
 @Injectable({
@@ -23,9 +22,7 @@ export class RoutesStorageService {
         environment.FIREBASE_ENDPOINT + 'routes.json',
         routes
       )
-      .subscribe(response => {
-        console.log(response);
-      });
+      .subscribe();
   }
 
   fetchRoutes(url: string) {
@@ -35,8 +32,7 @@ export class RoutesStorageService {
       )
       .pipe(
         tap(routes => {
-          console.log(this._I18nService.getDefaultLanguage())
-          this._RoutesService.setRoutes(routes, url, this._I18nService.getDefaultLanguage());
+          this._RoutesService.setRoutes(routes, url);
         })
       )
   }

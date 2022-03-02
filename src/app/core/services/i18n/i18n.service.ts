@@ -19,6 +19,19 @@ export class I18nService {
   constructor() { }
 
   setLanguages(languages: Languages[]) {
+
+    languages.map(language => {
+      language.isDefault = (language.isDefault = 0 ? false : true)
+      language.currency.map(currency => {
+        if(language.defaultCurrency === currency.value) {
+          currency.isDefault = true;
+        } else {
+          currency.isDefault = false;
+        }
+      })
+    })
+
+   
     this.languages = languages;
     this.languagesChanged$.next(this.languages.slice());
 
@@ -26,6 +39,7 @@ export class I18nService {
       this.defaultLanguage$.next(this.existingDefaultLangauge);
     } else {
       let language: Language = this.languages.slice().find(language => language.isDefault === true) || {} as Language;
+      
       this.defaultLanguage$.next(language);
     }
 
@@ -47,6 +61,10 @@ export class I18nService {
 
   getLanguages() {
     return this.languages.slice();
+  }
+
+  getLanguages$(): Observable<Languages[]> {
+    return this.languagesChanged$.asObservable();
   }
   
 

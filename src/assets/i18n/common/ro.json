@@ -14,5 +14,10 @@
                 "MORE": "Aflați mai multe"
             }
         }
+    },
+    "LANGUAGE_SELECTOR": {
+        "LABELS": {
+            "CURRENCY": "Monedă"
+        }
     }
 }

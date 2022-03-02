@@ -25,7 +25,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   language: string = '';
   routeURL: any
-  defaultlanguage = this._I18nService.getDefaultLanguage();
+  defaultlanguage: Language = {} as Language
   cookieConsent$ = this._GdprService.cookieConsent$;
   tokenUrl = 'https://test.api.amadeus.com/v1/security/oauth2/token';
   token: any;
@@ -144,24 +144,20 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    //this._BookFlightStorageService.storeTopDestinatinos(this.TOP_DESTINATIONS)
-
     
-    this._translate.use(this._I18nService.getDefaultLanguage().key)
-    this._translate.setDefaultLang(this._I18nService.getDefaultLanguage().key);
-    //this.changeTopDestinationsLanguage(this._I18nService.getDefaultLanguage().key);
-    this.changeRouteLanguage(this._I18nService.getDefaultLanguage());
-    this.changeApiLanguage(this._I18nService.getDefaultLanguage());
 
     this._I18nService.defaultLanguageChanged$()
-      .pipe(distinctUntilChanged())
-      .subscribe((lang: any) => {
+      .pipe(takeUntil(this._unsubscribeAll),
+      tap((lang: any) => {
+        this.defaultlanguage = lang
         this._translate.use(lang.key)
         this._translate.setDefaultLang(lang.key);
         this.changeTopDestinationsLanguage(lang.key);
         this.changeRouteLanguage(lang);
         this.changeApiLanguage(lang);
-      });
+      })
+      )
+      .subscribe();
 
 
     this._BookFlightService.getGeolocation$().pipe(
@@ -199,7 +195,10 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       .pipe(distinctUntilChanged())
       .subscribe((airport: any) => {
         this.selectedAirport = [];
-        this.selectedAirport.push(airport[0]);
+        if(airport.length > 0) {
+          this.selectedAirport.push(airport[0]);
+        } 
+      
       });
 
     this._BookFlightService.getTopDestinations$()
@@ -226,7 +225,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   changeApiLanguage(language: Language) {
-    this._BookFlightService.getNearbyAirports(this.location, language)
+    this._BookFlightService.getNearbyAirports(language)
   }
 
   changeRouteLanguage(language: Language) {
@@ -234,7 +233,6 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   menuOpenState(state: string) {
-    console.log(state)
     this.toggleMenuState = state
   }
 

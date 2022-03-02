@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.state = (this.state === 'closed' ? 'open' : 'closed');
-    console.log(this.state)
     this._BookFlightService.menuState$.next(this.state)
   }
 

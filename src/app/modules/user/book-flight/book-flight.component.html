@@ -31,8 +31,11 @@
             <div class="top-destinations__inner">
                 <ul class="top-destinations__list" *ngIf="selectedTopDestinations">
                     <li class="top-destinations__item" *ngFor="let topDestination of selectedTopDestinations">
-                        <img src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{topDestination.city_id}}.jpg&fit=cover&width=180&height=230&dpr=1" alt="">
-                        <h4>{{topDestination.city_name}}</h4>
+                        <div class="item__clip">
+                            <img src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{topDestination.city_id}}.jpg&fit=cover&width=180&height=230&dpr=1" alt="">
+                            <h4>{{topDestination.city_name}}</h4>
+                        </div>
+                        
                     </li>
                 </ul>
             </div>
