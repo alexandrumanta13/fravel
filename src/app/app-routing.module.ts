@@ -41,16 +41,7 @@ export const routes: Routes = [
         loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
         data: { preload: true }
       },
-      {
-        path: 'bilete-avion/selecteaza-plecare',
-        loadChildren: () => import('src/app/modules/user/select-departure/select-departure.module').then(m => m.SelectDepartureModule),
-       
-      },
-      {
-        path: 'book-flight/select-departure',
-        loadChildren: () => import('src/app/modules/user/select-departure/select-departure.module').then(m => m.SelectDepartureModule),
-       
-      }
+      
     ]
   },
 

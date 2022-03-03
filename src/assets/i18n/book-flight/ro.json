@@ -5,6 +5,7 @@
         "WHERE_FROM_FLY": "De unde pleci?",
         "TOP_DESTINATIONS": {
             "TITLE": "Destinatii populare"
-        }
+        },
+        "FORWARD": "Inainte"
     }
 }

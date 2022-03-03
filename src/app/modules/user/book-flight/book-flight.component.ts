@@ -39,7 +39,9 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   airports: Airports = {
     locations: []
   };
-  selectedAirport: any[] = [];
+  selectedAirport = new BehaviorSubject<any>('');
+  //destinationAirport: any = '';
+  destinationAirport = new BehaviorSubject<any>('');
 
   topDestinations: TopDestinations[] = [];
   selectedTopDestinations: any[] = [];
@@ -120,8 +122,9 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     },
   ]
   routeSubscription: Subscription = new Subscription;
-
-
+  departureMenuState: boolean = false;
+  departuresState$ = new BehaviorSubject<boolean>(false)
+  destinationState$ = new BehaviorSubject<boolean>(false)
 
 
   constructor(
@@ -184,33 +187,53 @@ export class BookFlightComponent implements OnInit, OnDestroy {
         }
       );
 
-
     this._BookFlightService.getAirports$()
       .pipe(distinctUntilChanged())
       .subscribe((airports: any) => {
         this.airports = airports;
       });
 
-    this._BookFlightService.getDepartureLocation$()
+    this._BookFlightService.getSelectedDeparture$()
       .pipe(distinctUntilChanged())
       .subscribe((airport: any) => {
-        this.selectedAirport = [];
-        if(airport.length > 0) {
-          this.selectedAirport.push(airport[0]);
-        } 
-      
+          this.selectedAirport.next(airport);
       });
 
     this._BookFlightService.getTopDestinations$()
       .pipe(distinctUntilChanged())
       .subscribe(destinations => {
-        this.topDestinations = destinations; //this._BookFlightService.getTopDestinations();
 
+        
+        this.topDestinations = destinations; 
         this.topDestinations.map(destinations => {
           let destination = destinations.city.filter((city: any) => city.language_key === this.defaultlanguage.key)
+         
           this.selectedTopDestinations.push(destination[0])
         })
+        console.log(this.selectedTopDestinations)
       })
+
+    this._BookFlightService.getSelectedDestination$()
+      .pipe(distinctUntilChanged())
+      .subscribe((destination: any) => {
+        if(Array.isArray(destination)) {
+          this.destinationAirport.next(destination[0]);
+        } else {
+          this.destinationAirport.next(destination);
+        }
+      })
+
+      this._BookFlightService.toggleDeparture().pipe(
+        distinctUntilChanged())
+        .subscribe(state => {
+          this.departuresState$.next(state);
+        })
+      this._BookFlightService.toggleDestination().pipe(
+        distinctUntilChanged())
+        .subscribe(state => {
+          this.destinationState$.next(state);
+        })
+      
   }
 
   ngAfterViewInit() {
@@ -242,6 +265,19 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       let destination = destinations.city.filter((city: any) => city.language_key === defaultLanguage)
       this.selectedTopDestinations.push(destination[0])
     })
+  }
+
+
+  toggleDeparture() {
+    this._BookFlightService.departureMenuState$.next(true)
+  }
+
+  toggleDestination() {
+    this._BookFlightService.destinationMenuState$.next(true)
+  }
+
+  selectDestination(iata_id: string) {
+    this._BookFlightService.getAirportsByCity(iata_id, 'destination');
   }
 
 

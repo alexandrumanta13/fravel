@@ -1,0 +1,24 @@
+<div class="select-destination__container">
+    <div class="go-back">
+        <div class="go-back__action" (click)="toggleDestination()">
+            <i class="icon-arrow-left"></i>
+        </div>
+        <span (click)="toggleDestination()">{{ 'DESTINATION_SELECTOR.GO_BACK' | translate}}</span>
+    </div>
+    <div class="select-destination__form">
+        <i class="icon-search"></i>
+        <input type="text" class="form-control" aria-label="Large" placeholder="{{ 'DESTINATION_SELECTOR.PLACEHOLDER' | translate}}" [(ngModel)]="destination" aria-describedby="inputGroup-sizing-sm" (keyup)="searchDestination()">
+    </div>
+    <ul class="select-destination__list" *ngIf="(airports | async).length > 0">
+        <ng-container *ngFor="let airport of (airports | async)">
+            <li>
+                <a (click)="selectDestination(airport)" [class.selected]="selectedAirport.getValue() !== '' && airport.airport_int_id === selectedAirport.getValue().airport_int_id">
+                    {{airport.city.name}}
+                    <small>{{airport.alternative_names[0]}}</small>
+                </a>
+            </li>
+        </ng-container>
+        
+    </ul>
+    <img class="bg" *ngIf="selectedAirport.getValue() !== ''" src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{selectedAirport.getValue().city.id}}.jpg&fit=cover&width={{screenWidth}}&height={{screenHeight}}&dpr=1" alt="">
+</div>

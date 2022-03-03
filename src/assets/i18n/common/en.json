@@ -19,5 +19,13 @@
         "LABELS": {
             "CURRENCY": "Currency"
         }
+    },
+    "DEPARTURE_SELECTOR":{
+        "PLACEHOLDER": "Search departure",
+        "GO_BACK": "Back"
+    },
+    "DDESTINATION_SELECTOR":{
+        "PLACEHOLDER": "Search destination",
+        "GO_BACK": "Back"
     }
 }

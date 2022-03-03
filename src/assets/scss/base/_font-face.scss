@@ -60,22 +60,29 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 .icon-edit {
   &:before {
     content: $icon-edit;     
-    color: #fff;
+    color: $color-white;
+  }
+}
+.icon-arrow-left {
+  &:before {
+    content: $icon-arrow-left;     
+    color: $color-white;
   }
 }
 .icon-arrow-right {
   &:before {
     content: $icon-arrow-right;     
-    color: #fff;
+    color: $color-white;
   }
 }
 .icon-plane-filled {
   &:before {
     content: $icon-plane-filled;     
-    color: #fff;
+    color: $color-white;
   }
 }
 .icon-boarding-cards {
@@ -136,6 +143,12 @@
 .icon-support {
   &:before {
     content: $icon-support; 
+  }
+}
+.icon-search {
+  &:before {
+    content: $icon-search;     
+    color: $color-white;
   }
 }
 

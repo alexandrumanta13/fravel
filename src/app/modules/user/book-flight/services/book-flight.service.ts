@@ -6,7 +6,7 @@ import { I18nService } from 'src/app/core/services';
 import { GeolocationService } from 'src/app/core/services/geolocation/geolocation.service';
 import { Language } from 'src/app/core/types';
 import { environment } from 'src/environments/environment.prod';
-import { Airports, GeoLocation, TopDestinations } from '../types';
+import { Airport, Airports, GeoLocation, TopDestinations } from '../types';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,12 @@ export class BookFlightService {
   destinationsChanged$ = new BehaviorSubject<TopDestinations[]>([]);
   destinations$ = new BehaviorSubject<TopDestinations[]>([]);
   private destinations: TopDestinations[] = [];
+  departureMenuState$ = new BehaviorSubject<boolean>(false);
+  destinationMenuState$ = new BehaviorSubject<boolean>(false);
+  selectedDeparture$ = new BehaviorSubject<any>('');
+  selectDestination$ = new BehaviorSubject<any>('');
 
+  locations: any[] = [];
 
   constructor(
     private _httpClient: HttpClient,
@@ -59,7 +64,8 @@ export class BookFlightService {
             tap(airports => {
               this.airports = airports.locations;
               this.airports$.next(airports.locations)
-              this.departureLocation$.next(airports.locations)
+              this.departureLocation$.next(airports.locations);
+              this.selectedDeparture$.next(airports.locations[0])
             }),
           ).subscribe()
       }
@@ -68,6 +74,38 @@ export class BookFlightService {
     
   
     return this.airports$.asObservable();
+  }
+
+  getAirportsByCity(city_id: string, action: string) {
+    const headers = new HttpHeaders({
+      'accept': 'application/json',
+      'apikey': environment.KIWI_KEY,
+    });
+
+    const params = new HttpParams({
+      fromObject: {
+        term: city_id,
+        locale: this._I18nService.defaultLanguage$.getValue().locale,
+        location_types: "airport", // this can be dynamic
+        limit: "20",
+        active_only: "true",
+      }
+    })
+
+    
+    this._httpClient.get<Airports>("https://tequila-api.kiwi.com/locations/query", { headers: headers, params: params })
+      .pipe(
+        tap(airports => {
+          this.locations = airports.locations;
+          if(action === 'destination') {
+            
+              this.selectDestination$.next(airports.locations)
+            
+          }
+        }),
+      ).subscribe();
+
+      return this.locations;
   }
 
   getGeolocation$(): Observable<GeoLocation> {
@@ -86,6 +124,14 @@ export class BookFlightService {
     return this.departureLocation$.asObservable();
   }
 
+  getSelectedDeparture$(): Observable<Airport> {
+    return this.selectedDeparture$.asObservable();
+  }
+
+  getSelectedDestination$(): Observable<Airports[]> {
+    return this.selectDestination$.asObservable();
+  }
+
   openSideMenu$(): Observable<string> {
     return this.menuState$.asObservable();
   }
@@ -102,6 +148,13 @@ export class BookFlightService {
 
   getTopDestinations() {
     return this.destinations.slice();
+  }
+
+  toggleDeparture(): Observable<boolean> {
+    return this.departureMenuState$.asObservable()
+  }
+  toggleDestination(): Observable<boolean> {
+    return this.destinationMenuState$.asObservable()
   }
 
 }

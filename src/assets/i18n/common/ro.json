@@ -19,5 +19,13 @@
         "LABELS": {
             "CURRENCY": "Monedă"
         }
+    },
+    "DEPARTURE_SELECTOR":{
+        "PLACEHOLDER": "Cauta plecare",
+        "GO_BACK": "Inapoi"
+    },
+    "DESTINATION_SELECTOR":{
+        "PLACEHOLDER": "Cauta destinatie",
+        "GO_BACK": "Inapoi"
     }
 }
