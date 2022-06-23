@@ -5,7 +5,8 @@
         "WHERE_FROM_FLY": "Departure from?",
         "TOP_DESTINATIONS": {
             "TITLE": "Popular destinations"
-        }
+        },
+        "FORWARD": "Forward"
     },
     "COMMON": {
         "LABELS": {

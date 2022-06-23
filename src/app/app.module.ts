@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LayoutModule } from './layout/layout.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/common/', '.json');
@@ -44,6 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
 
     // Layout module of your application
     LayoutModule,
+     NgbModule,
   ],
   providers: [],
 

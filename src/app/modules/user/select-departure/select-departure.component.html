@@ -1,1 +1,47 @@
-<p>select-departure works!</p>
+<div class="select-departure__container">
+  <div class="go-back">
+    <div class="go-back__action" (click)="toggleDeparture()">
+      <i class="icon-arrow-left"></i>
+    </div>
+    <!-- <span (click)="toggleDeparture()">{{ 'DEPARTURE_SELECTOR.GO_BACK' | translate}}</span> -->
+  </div>
+  <div class="select-departure__form">
+    <i class="icon-search"></i>
+    <input type="text" class="form-control" aria-label="Large"
+      placeholder="{{ 'DEPARTURE_SELECTOR.PLACEHOLDER' | translate}}" [(ngModel)]="departure"
+      aria-describedby="inputGroup-sizing-sm" (keyup)="searchDeparture($event)">
+  </div>
+  <ul class="select-departure__list" *ngIf="(airports | async).length > 0 && !isSearching">
+    <ng-container *ngFor="let airport of (airports | async)">
+      <li>
+        <a (click)="selectDeparture(airport)"
+          [class.selected]="selectedAirport.getValue() !== '' && airport.airport_int_id === selectedAirport.getValue().airport_int_id">
+          {{airport.city.name}}
+          <small>{{airport.alternative_names[0]}}</small>
+        </a>
+      </li>
+    </ng-container>
+  </ul>
+  <div class="select-departure__list" *ngIf="(airports | async).length > 0 && isSearching">
+    <ul *ngFor="let group of (airports | async)">
+      
+      <ng-container *ngFor="let airport of group">
+        <li class="country">
+            <span class="line-left"></span>
+            <span>{{airport.city.country.name}}</span>
+            <span class="line-right"></span>
+        </li>
+        <li>
+          <a (click)="selectDeparture(airport)"
+            [class.selected]="selectedAirport.getValue() !== '' && airport.airport_int_id === selectedAirport.getValue().airport_int_id">
+            {{airport.city.name}}
+            <small>{{airport.alternative_names[0]}}</small>
+          </a>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <img class="bg" *ngIf="selectedAirport.getValue() !== ''"
+    src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{selectedAirport.getValue().city.id}}.jpg&fit=cover&width={{screenWidth}}&height={{screenHeight}}&dpr=1"
+    alt="">
+</div>

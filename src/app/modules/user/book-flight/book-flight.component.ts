@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject, Subscription, timer } from 'rxjs';
 import { distinctUntilChanged, take, takeUntil, tap, } from 'rxjs/operators';
@@ -12,20 +12,21 @@ import { Airport, Airports, GeoLocation, TopDestinations } from './types';
 import { GdprService } from 'src/app/core/services/gdpr/gdpr.service';
 import { Location } from '@angular/common';
 import { BookFlightStorageService } from './services/book-flight-storage.service';
+import { SelectDateService } from '../select-date/select-date.service';
+import { SelectDateComponent } from '../select-date/select-date.component';
+import { SelectPersonsService } from '../select-persons/select-persons.service';
 
-
-
-declare var $: any;
 @Component({
   selector: 'app-book-flight',
   templateUrl: './book-flight.component.html',
   styleUrls: ['./book-flight.component.scss'],
+
 })
 export class BookFlightComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   language: string = '';
   routeURL: any
-  defaultlanguage = this._I18nService.getDefaultLanguage();
+  defaultlanguage: Language = {} as Language
   cookieConsent$ = this._GdprService.cookieConsent$;
   tokenUrl = 'https://test.api.amadeus.com/v1/security/oauth2/token';
   token: any;
@@ -39,7 +40,9 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   airports: Airports = {
     locations: []
   };
-  selectedAirport: any[] = [];
+  selectedAirport = new BehaviorSubject<any>('');
+  //destinationAirport: any = '';
+  destinationAirport = new BehaviorSubject<any>('');
 
   topDestinations: TopDestinations[] = [];
   selectedTopDestinations: any[] = [];
@@ -120,20 +123,31 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     },
   ]
   routeSubscription: Subscription = new Subscription;
+  departureMenuState: boolean = false;
+  departuresState$ = new BehaviorSubject<boolean>(false)
+  destinationState$ = new BehaviorSubject<boolean>(false);
+  urlParam: string = 'null';
 
-
-
+  
+  selectDateState: boolean = false;
+  selectDateState$ = new BehaviorSubject<boolean>(false);
+  dateComponentState$ = new BehaviorSubject<boolean>(true);
+  selectPersonsState$ = new BehaviorSubject<boolean>(false);
+  personsComponentState$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     public _translate: TranslateService,
     private _router: Router,
+    private _ActivatedRoute: ActivatedRoute,
     private _I18nService: I18nService,
     private _RoutesService: RoutesService,
     private _BookFlightService: BookFlightService,
     private _LoaderService: LoaderService,
     private _GdprService: GdprService,
     private _UrlLocation: Location,
-    private _BookFlightStorageService: BookFlightStorageService
+    private _BookFlightStorageService: BookFlightStorageService,
+    private _SelectDateService: SelectDateService,
+    private _SelectPersonsService: SelectPersonsService
   ) {
 
     this._router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -144,25 +158,45 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    //this._BookFlightStorageService.storeTopDestinatinos(this.TOP_DESTINATIONS)
+    this._ActivatedRoute.paramMap.subscribe(params => {
+      this.urlParam = String(params.get('departure'))
+    });
 
-    
-    this._translate.use(this._I18nService.getDefaultLanguage().key)
-    this._translate.setDefaultLang(this._I18nService.getDefaultLanguage().key);
-    //this.changeTopDestinationsLanguage(this._I18nService.getDefaultLanguage().key);
-    this.changeRouteLanguage(this._I18nService.getDefaultLanguage());
-    this.changeApiLanguage(this._I18nService.getDefaultLanguage());
+    this._SelectDateService.getSelectedDate$()
+    .pipe(distinctUntilChanged())
+    .subscribe(date => {
+      console.log(date)
+    })
+    this._SelectDateService.getSelectedDateState$()
+    .pipe(distinctUntilChanged())
+    .subscribe(date => {
+      
+      this.selectDateState$.next(date)
+    })
+    this._SelectPersonsService.getSelectedPersonsState$()
+    .pipe(distinctUntilChanged())
+    .subscribe(date => {
+      this.selectPersonsState$.next(date)
+    })
 
     this._I18nService.defaultLanguageChanged$()
-      .pipe(distinctUntilChanged())
-      .subscribe((lang: any) => {
-        this._translate.use(lang.key)
-        this._translate.setDefaultLang(lang.key);
-        this.changeTopDestinationsLanguage(lang.key);
-        this.changeRouteLanguage(lang);
-        this.changeApiLanguage(lang);
+      .pipe(takeUntil(this._unsubscribeAll),
+        tap((lang: any) => {
+          this.defaultlanguage = lang
+          this._translate.use(lang.key)
+          this._translate.setDefaultLang(lang.key);
+          this.changeTopDestinationsLanguage(lang.key);
+          this.changeRouteLanguage(lang);
+          this.changeApiLanguage(lang);
+          this.dateComponentState$.next(false);
+          
+        })
+      )
+      .subscribe(lang => {
+        setTimeout(() => {
+          this.dateComponentState$.next(true);
+        }, 10)
       });
-
 
     this._BookFlightService.getGeolocation$().pipe(
       takeUntil(this._unsubscribeAll))
@@ -188,30 +222,50 @@ export class BookFlightComponent implements OnInit, OnDestroy {
         }
       );
 
-
     this._BookFlightService.getAirports$()
       .pipe(distinctUntilChanged())
       .subscribe((airports: any) => {
         this.airports = airports;
       });
 
-    this._BookFlightService.getDepartureLocation$()
+    this._BookFlightService.getSelectedDeparture$()
       .pipe(distinctUntilChanged())
       .subscribe((airport: any) => {
-        this.selectedAirport = [];
-        this.selectedAirport.push(airport[0]);
+        this.selectedAirport.next(airport);
       });
 
     this._BookFlightService.getTopDestinations$()
       .pipe(distinctUntilChanged())
       .subscribe(destinations => {
-        this.topDestinations = destinations; //this._BookFlightService.getTopDestinations();
 
+        this.topDestinations = destinations;
         this.topDestinations.map(destinations => {
           let destination = destinations.city.filter((city: any) => city.language_key === this.defaultlanguage.key)
           this.selectedTopDestinations.push(destination[0])
         })
       })
+
+    this._BookFlightService.getSelectedDestination$()
+      .pipe(distinctUntilChanged())
+      .subscribe((destination: any) => {
+        if (Array.isArray(destination)) {
+          this.destinationAirport.next(destination[0][0]);
+        } else {
+          this.destinationAirport.next(destination);
+        }
+      })
+
+    this._BookFlightService.toggleDeparture().pipe(
+      distinctUntilChanged())
+      .subscribe(state => {
+        this.departuresState$.next(state);
+      })
+    this._BookFlightService.toggleDestination().pipe(
+      distinctUntilChanged())
+      .subscribe(state => {
+        this.destinationState$.next(state);
+      })
+
   }
 
   ngAfterViewInit() {
@@ -222,11 +276,26 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       //   .subscribe((currentRoute: CurrentRoute) => {
       //     this._UrlLocation.replaceState(currentRoute.url);
       //   });
+
+      if (this.urlParam != 'null') {
+        let splitURL = this.urlParam.split('-');
+        this._BookFlightService.getAirportsByURL(splitURL[0], 'departure')
+
+        this.selectDestination(splitURL[1]);
+      }
     }, 200)
+
+
+
+
+
+
+    // this._BookFlightService.selectDestination$.next(airport);
+    // this._BookFlightService.selectedDestination$.next(airport)
   }
 
   changeApiLanguage(language: Language) {
-    this._BookFlightService.getNearbyAirports(this.location, language)
+    this._BookFlightService.getNearbyAirports(language)
   }
 
   changeRouteLanguage(language: Language) {
@@ -234,7 +303,6 @@ export class BookFlightComponent implements OnInit, OnDestroy {
   }
 
   menuOpenState(state: string) {
-    console.log(state)
     this.toggleMenuState = state
   }
 
@@ -244,6 +312,23 @@ export class BookFlightComponent implements OnInit, OnDestroy {
       let destination = destinations.city.filter((city: any) => city.language_key === defaultLanguage)
       this.selectedTopDestinations.push(destination[0])
     })
+  }
+
+
+  toggleDeparture() {
+    this._BookFlightService.departureMenuState$.next(true)
+  }
+
+  toggleDestination() {
+    this._BookFlightService.destinationMenuState$.next(true)
+  }
+
+  selectDestination(iata_id: string) {
+    this._BookFlightService.getAirportsByCity(iata_id, 'destination');
+    if (Object.keys(this.selectedAirport.getValue()).length) {
+      //  this._SelectDateService.dateSelectedState$.next(true)
+       this._SelectPersonsService.personsSelectedState$.next(true)
+    }
   }
 
 

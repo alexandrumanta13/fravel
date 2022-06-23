@@ -5,6 +5,8 @@
     background-color: #fff;
     height: calc(50% + 6.4rem);
     padding-top: 14rem;
+    display: flex;
+    flex-direction: column;
   }
 
   @include respond(small-phone) {
@@ -20,6 +22,7 @@
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       -webkit-backface-visibility: hidden;
+      flex:1
     }
 
     @include respond(small-phone) {
@@ -47,18 +50,28 @@
   }
 
   &__item {
-    width: 180px;
-    height: 230px;
-    position: relative;
     margin: 0 1.6rem;
+    position: relative;
+    list-style: none;
     box-shadow: rgb(166 197 205 / 25%) 0px 50px 100px -20px, rgb(166 197 205 / 30%) 0px 30px 60px -30px;
-    clip-path: inset(0 round 16px 19px 16px 16px);
-    background-color: $color-sky-blue;
-    padding: 3.2rem;
 
-    @include respond(small-phone) {
-      height: 200px;
+    .item__clip {
+      clip-path: inset(0 round 16px 19px 16px 16px);
+      background-color: $color-sky-blue;
+      width: 180px;
+      height: 230px;
+      padding: 3.2rem;
+      z-index: 1;
+
+      @include respond(small-phone) {
+        height: 200px;
+        width: 160px;
+      }
     }
+
+  
+
+    
 
     img {
       position: absolute;

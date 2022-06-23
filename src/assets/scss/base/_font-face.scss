@@ -66,6 +66,12 @@
     color: #fff;
   }
 }
+.icon-arrow-left {
+  &:before {
+    content: $icon-arrow-left;     
+    color: #fff;
+  }
+}
 .icon-arrow-right {
   &:before {
     content: $icon-arrow-right;     
@@ -136,6 +142,57 @@
 .icon-support {
   &:before {
     content: $icon-support; 
+  }
+}
+.icon-search {
+  &:before {
+    content: $icon-search;     
+    color: #fff;
+  }
+}
+.icon-adult {
+  &:before {
+    content: $icon-adult; 
+  }
+}
+.icon-economy {
+  &:before {
+    content: $icon-economy; 
+  }
+}
+.icon-round-trip {
+  &:before {
+    content: $icon-round-trip; 
+  }
+}
+.icon-child {
+  &:before {
+    content: $icon-child; 
+  }
+}
+.icon-infant {
+  &:before {
+    content: $icon-infant; 
+  }
+}
+.icon-plus {
+  &:before {
+    content: $icon-plus; 
+  }
+}
+.icon-minus {
+  &:before {
+    content: $icon-minus; 
+  }
+}
+.icon-hand-luggage {
+  &:before {
+    content: $icon-hand-luggage; 
+  }
+}
+.icon-luggage {
+  &:before {
+    content: $icon-luggage; 
   }
 }
 

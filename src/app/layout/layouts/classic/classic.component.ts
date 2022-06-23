@@ -57,7 +57,6 @@ export class ClassicLayoutComponent implements OnInit, OnDestroy {
 
   menuOpenState(state: string) {
     this.toggleMenuState = state;
-    console.log(this.toggleMenuState)
   }
 
   changeLang(lang: string) {

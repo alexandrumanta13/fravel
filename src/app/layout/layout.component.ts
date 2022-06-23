@@ -21,6 +21,7 @@ export class LayoutComponent implements OnInit {
     if (this._activatedRoute.snapshot) {
       this.layout = this._activatedRoute.snapshot.data['layout'];
     }
+
     //this._authService.autoLogin();
   }
 

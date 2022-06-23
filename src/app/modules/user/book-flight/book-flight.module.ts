@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { BookFlightRoutingModule } from './book-flight-routing.module';
 import { BookFlightComponent } from './book-flight.component';
@@ -8,9 +7,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
-import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
-import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
-import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { SelectDepartureComponent } from '../select-departure/select-departure.component';
+import { SelectDestinationComponent } from '../select-destination/select-destination.component';
+import { SelectDateComponent } from '../select-date/select-date.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SelectPersonsComponent } from '../select-persons/select-persons.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -25,6 +26,10 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     BookFlightComponent,
+    SelectDepartureComponent,
+    SelectDestinationComponent,
+    SelectDateComponent,
+    SelectPersonsComponent
   ],
   imports: [
     SharedModule,
@@ -38,7 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
       },
       isolate: true
     }),
-
+    NgbModule
   ],
   providers: []
 })

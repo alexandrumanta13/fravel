@@ -19,60 +19,31 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/bilete-avion' },
 
   // Landing routes
-  { 
-    path: '', 
-    //resolve: [I18nResolverService, BookFlightResolver, RoutesResolver],
-    data: { layout: 'classic' } ,
+  {
+    path: '',
+    resolve: [BookFlightResolver],
+    data: { layout: 'classic' },
     component: LayoutComponent,
     children: [
       {
-        path: '', 
+        path: '',
         loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
-        resolve: [I18nResolverService, BookFlightResolver, RoutesResolver],
-        data: {preload: true}
+        data: { preload: true }
       },
       {
         path: 'book-flight',
-        pathMatch: 'full',
         loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
-        resolve: [I18nResolverService, BookFlightResolver, RoutesResolver],
-        data: {preload: true}
+       
+        data: { preload: true }
       },
       {
         path: 'bilete-avion',
-        pathMatch: 'full',
         loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
-        resolve: [I18nResolverService, BookFlightResolver, RoutesResolver],
-        data: {preload: true}
+        data: { preload: true }
       },
-      { 
-        path: 'bilete-avion/selecteaza-plecare', 
-        loadChildren: () => import('src/app/modules/user/select-departure/select-departure.module').then(m => m.SelectDepartureModule),
-        resolve: [I18nResolverService, BookFlightResolver], 
-      },
-      { 
-        path: 'book-flight/select-departure', 
-        loadChildren: () => import('src/app/modules/user/select-departure/select-departure.module').then(m => m.SelectDepartureModule),
-        resolve: [I18nResolverService, BookFlightResolver],
-      }
+      
     ]
   },
-  //{path: '', component: BookFlightComponent,  resolve: [I18nResolverService] },
-  // {
-  //   path: 'book-flight',
-  //   pathMatch: 'full',
-  //   loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
-  //   resolve: [I18nResolverService, BookFlightResolver],
-    
-  // },
-  // {
-  //   path: 'bilete-avion',
-  //   pathMatch: 'full',
-  //   loadChildren: () => import('src/app/modules/user/book-flight/book-flight.module').then(m => m.BookFlightModule),
-  //   resolve: [I18nResolverService, BookFlightResolver]
-  // },
-  // {path: '404', component: BookFlightComponent },
-  // {path: '**', redirectTo: '/404'},
 
 ];
 

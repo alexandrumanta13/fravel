@@ -7,7 +7,9 @@ import { BookFlightComponent } from './book-flight.component';
 
 const routes: Routes = [
 
-  { path: '', component: BookFlightComponent, data: { title: 'asdad' }, resolve: [] },
+  { path: '', component: BookFlightComponent, data: { title: 'asdad' } },
+  { path: 'bilete-avion/:departure', component: BookFlightComponent, data: { title: 'departure' } },
+  { path: 'book-flight/:departure', component: BookFlightComponent, data: { title: 'departure' } },
   // { path: 'book-flight', component: BookFlightComponent, data: { title: 'BOOK-FILGHT.TITLE' }, resolve: [I18nResolverService, RoutesResolver] },
   // { path: 'bilete-avion', component: BookFlightComponent, data: { title: 'BOOK-FILGHT.TITLE' }, resolve: [I18nResolverService, RoutesResolver] },
 

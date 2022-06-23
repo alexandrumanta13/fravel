@@ -10,7 +10,7 @@
         </ng-container>
       </div>
       <div class="currency-select">
-        <label>{{ 'COMMON.LABELS.CURRENCY' | translate }}:</label>
+        <label>{{ 'LANGUAGE_SELECTOR.LABELS.CURRENCY' | translate }}:</label>
         <ul class="currency-select__list">
           <ng-container *ngFor="let currency of selectedLanguage.currency">
             <li (click)="changeCurrency(currency.value)" [class.selected]="currency.value === selectedLanguage.defaultCurrency">{{currency.value}}</li>

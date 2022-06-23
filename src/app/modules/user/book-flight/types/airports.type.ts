@@ -1,6 +1,6 @@
 export interface Airports {
     // last_refresh: number,
-    locations: [],
+    locations: any[],
     // meta: {}, 
     // results_retrieved: number
 }

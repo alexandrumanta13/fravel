@@ -14,5 +14,40 @@
                 "MORE": "Aflați mai multe"
             }
         }
+    },
+    "LANGUAGE_SELECTOR": {
+        "LABELS": {
+            "CURRENCY": "Monedă"
+        }
+    },
+    "DEPARTURE_SELECTOR":{
+        "PLACEHOLDER": "Cauta plecare",
+        "GO_BACK": "Inapoi"
+    },
+    "DESTINATION_SELECTOR":{
+        "PLACEHOLDER": "Cauta destinatie",
+        "GO_BACK": "Inapoi"
+    },
+    "PICK_DATE":{
+        "TITLE": "Alege data de plecare"
+    },
+    "SELECT_NO_PERSONS":{
+        "TITLE": "Pasageri si bagaje",
+        "FLIGHT": "Tip de zbor",
+        "PERSONS_SUBTITLE": "Pasageri",
+        "LUGGAGE_SUBTITLE": "Bagaje",
+        "ROUNDTRIP": "Dus-intors",
+        "ONEWAY": "Doar dus",
+        "ECONOMY": "Economie",
+        "BUSINESS": "Business",
+        "ADULTS_LABEL": "Adulti",
+        "CHILDS_LABEL": "Copii",
+        "INFANTS_LABEL": "Infanti",
+        "ADULTS_INFO": "Peste 11 ani",
+        "CHILDS_INFO": "2 - 11 ani",
+        "INFANTS_INFO": "Sub 2 ani",
+        "HAND_LUGGAGE": "Bagaj de mana",
+        "LUGGAGE": "Bagaj de cala",
+        "SELECT_DATE": "Selecteaza data plecarii"
     }
 }
