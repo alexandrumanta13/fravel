@@ -12,6 +12,8 @@
 @import "assets/scss/layout/buttons";
 @import "assets/scss/layout/loader";
 @import "assets/scss/layout/gdpr";
+@import "assets/scss/layout/toggle";
+@import "assets/scss/layout/form";
 
 @import "assets/scss/components/hamburger";
 @import "assets/scss/components/destination-selector";
@@ -20,6 +22,9 @@
 @import "assets/scss/components/language-selector";
 @import "assets/scss/components/select-departure";
 @import "assets/scss/components/select-destination";
+@import "assets/scss/components/calendar";
 
 
 @import "assets/scss/pages/book-flight";
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

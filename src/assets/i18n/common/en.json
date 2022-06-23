@@ -24,8 +24,30 @@
         "PLACEHOLDER": "Search departure",
         "GO_BACK": "Back"
     },
-    "DDESTINATION_SELECTOR":{
+    "DESTINATION_SELECTOR":{
         "PLACEHOLDER": "Search destination",
         "GO_BACK": "Back"
+    },
+    "PICK_DATE":{
+        "TITLE": "Choose departure date"
+    },
+    "SELECT_NO_PERSONS":{
+        "TITLE": "Passengers and baggs",
+        "FLIGHT": "Flight type",
+        "PERSONS_SUBTITLE": "Passengers",
+        "LUGGAGE_SUBTITLE": "Baggs",
+        "ROUNDTRIP": "Round trip",
+        "ONEWAY": "One way",
+        "ECONOMY": "Economy",
+        "BUSINESS": "Business",
+        "ADULTS_LABEL": "Adults",
+        "CHILDS_LABEL": "Children",
+        "INFANTS_LABEL": "Infants",
+        "ADULTS_INFO": "Over 11 YO",
+        "CHILDS_INFO": "2 - 11 YO",
+        "INFANTS_INFO": "Under 2 YO",
+        "HAND_LUGGAGE": "Hand luggage",
+        "LUGGAGE": "Hold luggage",
+        "SELECT_DATE": "Select departure date"
     }
 }

@@ -9,6 +9,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SelectDepartureComponent } from '../select-departure/select-departure.component';
 import { SelectDestinationComponent } from '../select-destination/select-destination.component';
+import { SelectDateComponent } from '../select-date/select-date.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SelectPersonsComponent } from '../select-persons/select-persons.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -24,7 +27,9 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     BookFlightComponent,
     SelectDepartureComponent,
-    SelectDestinationComponent
+    SelectDestinationComponent,
+    SelectDateComponent,
+    SelectPersonsComponent
   ],
   imports: [
     SharedModule,
@@ -38,7 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
       },
       isolate: true
     }),
-
+    NgbModule
   ],
   providers: []
 })

@@ -7,7 +7,7 @@
                     <h3 *ngIf="selectedAirport.getValue() === ''">{{ 'BOOK-FILGHT.WHERE_FROM_FLY' | translate}} <i class="icon-edit"></i></h3>
                     <h3 *ngIf="selectedAirport.getValue() !== ''">{{(selectedAirport | async).city.name}} <i class="icon-edit"></i></h3>
                 </div>
-                <aside class="border"><i class="icon-plane-filled"></i></aside>
+                <aside class="border-dash"><i class="icon-plane-filled"></i></aside>
                 <div class="destination-city">
                     <h1>{{ 'BOOK-FILGHT.WHERE_TO_FLY' | translate }}</h1>
                     <div class="vwrap" *ngIf="selectedTopDestinations && (destinationAirport | async) === ''" (click)="toggleDestination()">
@@ -19,10 +19,10 @@
                         </div>
                         
                     </div>
-                    <div class="destination-city__actions" *ngIf="selectedAirport.getValue() !== '' && (destinationAirport | async) !== ''">
+                    <!-- <div class="destination-city__actions" *ngIf="selectedAirport.getValue() !== '' && (destinationAirport | async) !== ''">
                         <span>{{ 'BOOK-FILGHT.FORWARD' | translate}}</span>
                         <i class="icon-arrow-right"></i>
-                    </div>
+                    </div> -->
                    
                     <div class="selected-destination" *ngIf="(destinationAirport | async) !== ''" (click)="toggleDestination()">
                         <h2>{{(destinationAirport | async).city.name}}</h2>
@@ -50,3 +50,5 @@
 
 <app-select-departure [class.open]="departuresState$.getValue()"></app-select-departure>
 <app-select-destination [class.open]="destinationState$.getValue()"></app-select-destination>
+<app-select-date [class.open]="(selectDateState$ | async)" *ngIf="dateComponentState$ | async"></app-select-date>
+<app-select-persons [class.open]="selectPersonsState$.getValue()" *ngIf="personsComponentState$ | async"></app-select-persons>

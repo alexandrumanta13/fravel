@@ -1,0 +1,66 @@
+.toggle {
+	display: flex;
+    width: 150px;
+    margin-left: auto;
+    height: 100%;
+}
+
+.toggle input[type="checkbox"] {
+	opacity: 0 !important;
+    display: none;
+}
+
+.toggle input[type="checkbox"] + label {
+	padding-left: 64px;
+    font-size: 2rem;
+    position: absolute;
+    color: $color-grey-2;
+}
+
+.toggle input[type="checkbox"] + label:before {
+	-webkit-transition: background-color 0.4s ease;
+	-moz-transition: background-color 0.4s ease;
+	transition: background-color 0.4s ease;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+	width: 48px;
+	height: 24px;
+	background-color: $color-grey-3;
+	border-radius: 24px;
+}
+
+.toggle input[type="checkbox"]:checked + label:before {
+	background-color: $color-dark;
+}
+
+.toggle input[type="checkbox"] + label:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	-webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75),;
+	-moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+	transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+	position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 20px;
+    height: 20px;
+	content: '';
+	background-color: $color-white;	
+    border-radius: 24px;
+}
+
+.toggle input[type="checkbox"]:checked + label:after {
+	transform: translateX(25px);
+	
+}
+
+.toggle.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}

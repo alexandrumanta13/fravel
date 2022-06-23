@@ -1,0 +1,174 @@
+<header class="select-persons__header">
+  <div class="go-back">
+    <div class="go-back__action" (click)="toggleSelectPersons()">
+      <i class="icon-arrow-left"></i>
+    </div>
+  </div>
+  <h1>{{ 'SELECT_NO_PERSONS.TITLE' | translate}}</h1>
+</header>
+<div class="select-persons__container">
+  <div class="extra-info__container">
+    <h2>{{ 'SELECT_NO_PERSONS.FLIGHT' | translate}}</h2>
+    <ul class="list">
+      <li>
+        <i class="icon-round-trip" alt="Roundtrip"></i>
+        <div class="toggle">
+          <input type="checkbox" name="flightType" id="flightType" checked (change)="flightTypeChanged($event)">
+          <label
+            for="flightType">{{ flightType ? ('SELECT_NO_PERSONS.ROUNDTRIP' | translate) : ('SELECT_NO_PERSONS.ONEWAY' | translate)}}</label>
+        </div>
+      </li>
+      <li>
+        <i class="icon-economy" alt="Economy"></i>
+        <div class="toggle">
+          <input type="checkbox" name="classType" id="classType" checked (change)="classTypeChanged($event)" checked>
+          <label
+            for="classType">{{ classType ? ('SELECT_NO_PERSONS.ECONOMY' | translate) : ('SELECT_NO_PERSONS.BUSINESS' | translate)}}</label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="spacer">
+    <hr>
+  </div>
+
+  <div class="persons__container">
+    <h2>{{ 'SELECT_NO_PERSONS.PERSONS_SUBTITLE' | translate}}</h2>
+    <ul class="list">
+      <li>
+        <div class="persons__list">
+          <i class="icon-adult" alt="Persons"></i>
+          <div class="info">
+            <small>{{ 'SELECT_NO_PERSONS.ADULTS_LABEL' | translate}}</small>
+            <small>{{ 'SELECT_NO_PERSONS.ADULTS_INFO' | translate}}</small>
+          </div>
+        </div>
+        <div class="persons__qnt">
+          <div class="input-group">
+            <button (click)="removeOneAdult()" class="btn btn-square-icon qnt-minus" type="button">
+              <i class="icon-minus"></i>
+            </button>
+
+            <input [disabled]="(disabledAdd$ | async) || false" class="qnt" min="1" max="9" [(ngModel)]="noOfAdults"
+              value="1" type="number" name="noOfAdults">
+
+            <button [disabled]="(disabledAdd$ | async) || false" (click)="addOneAdult()"
+              class="btn btn-square-icon qnt-plus" type="button">
+              <i class="icon-plus"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="persons__list">
+          <i class="icon-child" alt="Children"></i>
+          <div class="info">
+            <small>{{ 'SELECT_NO_PERSONS.CHILDS_LABEL' | translate}}</small>
+            <small>{{ 'SELECT_NO_PERSONS.CHILDS_INFO' | translate}}</small>
+          </div>
+        </div>
+        <div class="persons__qnt">
+          <div class="input-group">
+            <button (click)="removeOneChild()" class="btn btn-square-icon qnt-minus" type="button">
+              <i class="icon-minus"></i>
+            </button>
+
+            <input [disabled]="(disabledAdd$ | async) || false" class="qnt" min="1" max="11" [(ngModel)]="noOfChilds"
+              value="1" type="number" name="noOfChilds">
+
+            <button [disabled]="(disabledAdd$ | async) || false" (click)="addOneChild()"
+              class="btn btn-square-icon qnt-plus" type="button">
+              <i class="icon-plus"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="persons__list">
+          <i class="icon-infant" alt="Infant"></i>
+          <div class="info">
+            <small>{{ 'SELECT_NO_PERSONS.INFANTS_LABEL' | translate}}</small>
+            <small>{{ 'SELECT_NO_PERSONS.INFANTS_INFO' | translate}}</small>
+          </div>
+        </div>
+        <div class="persons__qnt">
+          <div class="input-group">
+            <button (click)="removeOneInfant()" class="btn btn-square-icon qnt-minus" type="button">
+              <i class="icon-minus"></i>
+            </button>
+
+            <input [disabled]="(disabledAdd$ | async) || false" class="qnt" min="1" max="11" [(ngModel)]="noOfInfants"
+              value="1" type="number" name="noOfInfants">
+
+            <button [disabled]="(disabledAdd$ | async) || (disabledAddInfant$ | async) || false"
+              (click)="addOneInfant()" class="btn btn-square-icon qnt-plus" type="button">
+              <i class="icon-plus"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="spacer">
+    <hr>
+  </div>
+  <div class="luggage__container">
+    <h2>{{ 'SELECT_NO_PERSONS.LUGGAGE_SUBTITLE' | translate}}</h2>
+    <ul class="list">
+      <li>
+        <div class="persons__list">
+          <i class="icon-hand-luggage" alt="Hand luggage"></i>
+          <div class="info">
+            <small>{{ 'SELECT_NO_PERSONS.HAND_LUGGAGE' | translate}}</small>
+            <small>40 x 20 x 30 cm</small>
+          </div>
+        </div>
+        <div class="persons__qnt">
+          <div class="input-group">
+            <button (click)="removeOneHandLuggage()" class="btn btn-square-icon qnt-minus" type="button">
+              <i class="icon-minus"></i>
+            </button>
+
+            <input [disabled]="(disabledAddHandLuggage$ | async) || false" class="qnt" min="1" max="11"
+              [(ngModel)]="noOfHandLuggage" value="1" type="number" name="noOfHandLuggage">
+
+            <button [disabled]="(disabledAddHandLuggage$ | async) || false" (click)="addOneHandLuggage()"
+              class="btn btn-square-icon qnt-plus" type="button">
+              <i class="icon-plus"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="persons__list">
+          <i class="icon-luggage" alt="Hold luggage"></i>
+          <div class="info">
+            <small>{{ 'SELECT_NO_PERSONS.LUGGAGE' | translate}}</small>
+            <small>55 x 23 x 40 cm</small>
+          </div>
+        </div>
+        <div class="persons__qnt">
+          <div class="input-group">
+            <button (click)="removeOneLuggage()" class="btn btn-square-icon qnt-minus" type="button">
+              <i class="icon-minus"></i>
+            </button>
+
+            <input [disabled]="(disabledAddLuggage$ | async) || false" class="qnt" min="1" max="11"
+              [(ngModel)]="noOfLuggage" value="1" type="number" name="noOfLuggage">
+
+            <button [disabled]="(disabledAddLuggage$ | async) || false" (click)="addOneLuggage()"
+              class="btn btn-square-icon qnt-plus" type="button">
+              <i class="icon-plus"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="actions">
+    <button (click)="selectDate(); changeDateState()" class="btn btn-primary btn-full-width">{{ 'SELECT_NO_PERSONS.SELECT_DATE' | translate}}</button>
+  </div>
+
+</div>

@@ -14,7 +14,7 @@ export class I18nService {
   private languages: Languages[] = [];
   existingDefaultLangauge: Language = JSON.parse(localStorage.getItem('_frvl_lng_dflt') || '{}');
   languageState$ = new BehaviorSubject<string>('');
-  defaultLanguage: any;
+  defaultLanguage: string = '';
 
   constructor() { }
 
@@ -41,16 +41,21 @@ export class I18nService {
       let language: Language = this.languages.slice().find(language => language.isDefault === true) || {} as Language;
       
       this.defaultLanguage$.next(language);
+      this.defaultLanguage = language.key
     }
-
+    console.log(languages)
     this.getDefaultLanguage();
   }
 
   defaultLanguageChanged$(): Observable<Language> {
     return this.defaultLanguage$.asObservable();
   }
+  defaultLanguageCalendar():string {
+    return this.defaultLanguage;
+  }
 
   getDefaultLanguage() {
+   
     if (Object.keys(this.existingDefaultLangauge).length) {
       return this.existingDefaultLangauge
     } else {

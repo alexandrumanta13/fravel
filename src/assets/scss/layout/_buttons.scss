@@ -15,10 +15,64 @@
     padding: .8rem 1.6rem;
     border-radius: 1.2rem;
     height: 6.4rem;
+    font-size: 1.9rem;
+    border: none;
+
+    &:focus, &:hover, &:active {
+      border: none;
+      outline: none;
+      color: $color-white;
+      background-color: $color-dark;
+      box-shadow: none;
+    }
   }
 
   &.btn-full-width {
     width: 100%;
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
+  &.btn-square-icon {
+    box-shadow: 0 1.2rem 2.4rem 0 $color-grey-3;
+    background-color: $color-dark;
+    color: $color-white;
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 1.6rem;
+    font-size: 1.9rem;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 1.9rem;
+    }
+
+    &.qnt-minus {
+      position: absolute;
+      left: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &.qnt-plus {
+      position: absolute;
+      right: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:focus, &:hover {
+      border: none;
+      outline: none;
+      color: $color-white;
+      background-color: $color-dark;
+      box-shadow: none;
+    }
   }
 }
 
@@ -46,3 +100,4 @@
   color: #fff;
   text-decoration: none;
 }
+

@@ -34,7 +34,7 @@
       }
 
       span {
-          color: $color-white;
+        color: $color-white;
       }
     }
 
@@ -93,6 +93,14 @@
           font-family: $sf-regular;
           font-weight: 100;
         }
+
+        &:hover, &:focus {
+          border: none;
+          outline: none;
+          background: rgba($color-white, .4);
+          box-shadow: none;
+          color: $color-white;
+        }
       }
     }
   }
@@ -103,9 +111,11 @@
       list-style: none;
       flex: 1;
       overflow: auto;
+      padding-top: 10px;
 
       li {
         margin: 1.6rem 0;
+        color: $color-white;
 
         a {
           font-size: 5.6rem;
@@ -120,6 +130,49 @@
 
           &.selected {
             font-family: $sf-bold;
+          }
+        }
+      }
+
+      ul {
+        list-style: none;
+        // border-top: 1px solid rgba($color-white, .8);
+        position: relative;
+        padding: 2rem 0;
+        margin: 2rem 0;
+
+        .country {
+          display: none;
+          position: absolute;
+          top: -3rem;
+          font-size: 1.9rem;
+          color: $color-white;
+
+          span {
+            display: flex;
+            align-items: center;
+            margin: 0 8px;
+            white-space: nowrap;
+
+            &.line-left {
+              width: 1.6rem;
+              height: 1px;
+              margin: 0;
+              background-color: rgba($color-white, .8);
+            }
+
+            &.line-right {
+              height: 1px;
+              width: 100%;
+              margin: 0;
+              background-color: rgba($color-white, .8);
+            }
+          }
+
+          &:first-child {
+            display: flex;
+            width: 100%;
+            align-items: center;
           }
         }
       }

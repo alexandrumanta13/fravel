@@ -60,29 +60,28 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .icon-edit {
   &:before {
     content: $icon-edit;     
-    color: $color-white;
+    color: #fff;
   }
 }
 .icon-arrow-left {
   &:before {
     content: $icon-arrow-left;     
-    color: $color-white;
+    color: #fff;
   }
 }
 .icon-arrow-right {
   &:before {
     content: $icon-arrow-right;     
-    color: $color-white;
+    color: #fff;
   }
 }
 .icon-plane-filled {
   &:before {
     content: $icon-plane-filled;     
-    color: $color-white;
+    color: #fff;
   }
 }
 .icon-boarding-cards {
@@ -148,7 +147,52 @@
 .icon-search {
   &:before {
     content: $icon-search;     
-    color: $color-white;
+    color: #fff;
+  }
+}
+.icon-adult {
+  &:before {
+    content: $icon-adult; 
+  }
+}
+.icon-economy {
+  &:before {
+    content: $icon-economy; 
+  }
+}
+.icon-round-trip {
+  &:before {
+    content: $icon-round-trip; 
+  }
+}
+.icon-child {
+  &:before {
+    content: $icon-child; 
+  }
+}
+.icon-infant {
+  &:before {
+    content: $icon-infant; 
+  }
+}
+.icon-plus {
+  &:before {
+    content: $icon-plus; 
+  }
+}
+.icon-minus {
+  &:before {
+    content: $icon-minus; 
+  }
+}
+.icon-hand-luggage {
+  &:before {
+    content: $icon-hand-luggage; 
+  }
+}
+.icon-luggage {
+  &:before {
+    content: $icon-luggage; 
   }
 }
 

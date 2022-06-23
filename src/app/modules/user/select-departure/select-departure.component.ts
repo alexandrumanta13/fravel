@@ -21,6 +21,7 @@ export class SelectDepartureComponent implements OnInit, OnDestroy {
   selectedAirport = new BehaviorSubject<any>(this._BookFlightService.departureLocation$.getValue())
   screenHeight: number = 0;
   screenWidth: number = 0;
+  isSearching: boolean = false;
 
 
   constructor(
@@ -39,7 +40,6 @@ export class SelectDepartureComponent implements OnInit, OnDestroy {
     this._BookFlightService.getSelectedDeparture$()
       .pipe(distinctUntilChanged())
       .subscribe((airport: any) => {
-        console.log(airport)
         this.selectedAirport.next(airport);
       });
 
@@ -51,11 +51,14 @@ export class SelectDepartureComponent implements OnInit, OnDestroy {
   searchDeparture($event: KeyboardEvent) {
     this.selectedAirport.next('');
     this.airports.next('');
+    this.isSearching = true;
     this.airports.next(this._BookFlightService.getAirportsByCity(this.departure, 'departure'));
+
   }
 
   selectDeparture(airport: Airport) {
-    this._BookFlightService.selectedDeparture$.next(airport)
+    this._BookFlightService.selectedDeparture$.next(airport);
+    this.toggleDeparture();
   }
 
   toggleDeparture() {

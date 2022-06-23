@@ -93,6 +93,14 @@
             font-family: $sf-regular;
             font-weight: 100;
           }
+
+          &:hover, &:focus {
+            border: none;
+            outline: none;
+            background: rgba($color-white, .4);
+            box-shadow: none;
+            color: $color-white;
+          }
         }
       }
     }

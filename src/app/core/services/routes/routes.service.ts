@@ -34,25 +34,40 @@ export class RoutesService {
   }
 
   setRoutes(routes: AppRoutes[], url: string) {
+
+    // check if has parameter in url
+    let count = (url.match(/\/.*\//) || []).length;
+
+    if (count > 0) {
+      let pageURL = url.split('/').slice(1, 2);
+      url = '/' + pageURL.join('/');
+    }
+
     this.routes = routes;
-
     let getCurrentUrl: AppRoutes = {} as AppRoutes;
-
     this.routes.slice()
       .map(routes => {
         routes.translate_route
           .filter(route => {
+            console.log(route.url)
+            if (route.url.includes(url)) {
+              console.log(routes)
+            }
             if (route.url === url) {
               getCurrentUrl = { ...routes };
             }
           })
       })
+    // .map(routes => routes.translate_route.filter(route => !route.url.includes(url)))
+
+    console.log(getCurrentUrl)
 
     this._I18nService.defaultLanguageChanged$().pipe(
       distinctUntilChanged(),
       tap(defaultLanguage => {
         if (Object.keys(defaultLanguage).length > 0) {
           const checkIfURLisDefaultLang = getCurrentUrl.translate_route.filter(route => route.language_key === defaultLanguage.key)
+
 
           this.currentRouteSet.url = checkIfURLisDefaultLang[0].url;
           this.currentRouteSet.language_key = checkIfURLisDefaultLang[0].language_key;
@@ -75,6 +90,14 @@ export class RoutesService {
 
 
   translateCurrentRoute(url: string, defaultLanguage: Language) {
+
+    // check if has parameter in url
+    let count = (url.match(/\/.*\//) || []).length;
+
+    if (count > 0) {
+      let pageURL = url.split('/').slice(1, 2);
+      url = '/' + pageURL.join('/');
+    }
 
     let getCurrentUrl: AppRoutes = {} as AppRoutes;
 

@@ -9,7 +9,7 @@
         <i class="icon-search"></i>
         <input type="text" class="form-control" aria-label="Large" placeholder="{{ 'DESTINATION_SELECTOR.PLACEHOLDER' | translate}}" [(ngModel)]="destination" aria-describedby="inputGroup-sizing-sm" (keyup)="searchDestination()">
     </div>
-    <ul class="select-destination__list" *ngIf="(airports | async).length > 0">
+    <!-- <ul class="select-destination__list" *ngIf="(airports | async).length > 0">
         <ng-container *ngFor="let airport of (airports | async)">
             <li>
                 <a (click)="selectDestination(airport)" [class.selected]="selectedAirport.getValue() !== '' && airport.airport_int_id === selectedAirport.getValue().airport_int_id">
@@ -19,6 +19,25 @@
             </li>
         </ng-container>
         
-    </ul>
+    </ul> -->
+    <div class="select-departure__list" *ngIf="(airports | async).length">
+        <ul *ngFor="let group of (airports | async)">
+          
+          <ng-container *ngFor="let airport of group">
+            <li class="country">
+                <span class="line-left"></span>
+                <span>{{airport.city.country.name}}</span>
+                <span class="line-right"></span>
+            </li>
+            <li>
+              <a (click)="selectDestination(airport)"
+                [class.selected]="selectedAirport.getValue() !== '' && airport.airport_int_id === selectedAirport.getValue().airport_int_id">
+                {{airport.city.name}}
+                <small>{{airport.alternative_names[0]}}</small>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
     <img class="bg" *ngIf="selectedAirport.getValue() !== ''" src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{selectedAirport.getValue().city.id}}.jpg&fit=cover&width={{screenWidth}}&height={{screenHeight}}&dpr=1" alt="">
 </div>

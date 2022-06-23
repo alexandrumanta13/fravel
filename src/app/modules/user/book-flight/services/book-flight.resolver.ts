@@ -24,7 +24,6 @@ export class BookFlightResolver implements Resolve<any> {
 
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any | Observable<any> | Promise<any> {
-
     return forkJoin([
       this._I18nStorageService.fetchLanguages(),
       this._GeoLocationService.fetchLocation(),
