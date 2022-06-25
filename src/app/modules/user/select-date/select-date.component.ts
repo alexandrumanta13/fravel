@@ -4,7 +4,9 @@ import { NgbDate, NgbCalendar, NgbDateStruct, NgbDatepickerI18n } from '@ng-boot
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { I18nService } from 'src/app/core/services';
 import { Language } from 'src/app/core/types';
+import { BookFlightService } from '../book-flight/services/book-flight.service';
 import { SelectDateService } from './select-date.service';
+import { SelectPersonsService } from '../select-persons/select-persons.service';
 
 
 @Component({
@@ -52,12 +54,16 @@ export class SelectDateComponent implements OnInit {
     ]
   };
   selectedDates: any[] = [];
+  toggleMenuState: string = 'closed';
+  wasSelectedDateBefore: boolean = false;
 
   constructor(
     private calendar: NgbCalendar,
     @Inject(DOCUMENT) private _document: any,
     private _I18nService: I18nService,
-    private _SelectDateService: SelectDateService
+    private _SelectDateService: SelectDateService,
+    private _BookFlightService: BookFlightService,
+    private _SelectPersonsService: SelectPersonsService
   ) {
     this.fromDate = this.calendar.getToday();
     // this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
@@ -72,6 +78,14 @@ export class SelectDateComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this._BookFlightService.openSideMenu$().pipe(
+      distinctUntilChanged())
+      .subscribe(
+        (state) => {
+          this.menuOpenState(state);
+        }
+      );
+
     this._SelectDateService.oneWayState$()
       .pipe(distinctUntilChanged())
       .subscribe(oneWay => {
@@ -82,13 +96,18 @@ export class SelectDateComponent implements OnInit {
       })
 
     this.disableDates();
+      console.log(this.oneWay)
+  }
 
+  menuOpenState(state: string) {
+    this.toggleMenuState = state
   }
 
   addStartAndEndDate() {
 
 
     if (!this.oneWay) {
+      console.log('asdsa')
       this.selectedDates = [...this._document.querySelectorAll('.ngb-dp-day')];
       this.selectedDates.map(el => {
         el.classList.remove('start-date');
@@ -107,11 +126,13 @@ export class SelectDateComponent implements OnInit {
 
       });
     } else {
-
-
+    
       let parent = [...this._document.querySelectorAll('.ngb-dp-day')];
       parent.map(el => {
-        el.classList.remove('start-date');
+        if(this.wasSelectedDateBefore) {
+          el.classList.remove('start-date');
+        }
+       
         el.classList.remove('start-date-only');
         el.classList.remove('end-date');
         el.classList.add('oneway');
@@ -135,14 +156,22 @@ export class SelectDateComponent implements OnInit {
 
   onDateSelection(date: NgbDate) {
 
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
+    if(!this.oneWay) {
+      if (!this.fromDate && !this.toDate) {
+        this.fromDate = date;
+      } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+        this.toDate = date;
+      } else {
+        this.toDate = null;
+        this.fromDate = date;
+      }
     } else {
-      this.toDate = null;
+      this.wasSelectedDateBefore = true;
       this.fromDate = date;
+      this.toDate = null;
     }
+
+   
 
     this.addStartAndEndDate();
     this._SelectDateService.setSelectedDate(this.toDate, this.fromDate)
@@ -173,7 +202,8 @@ export class SelectDateComponent implements OnInit {
   }
 
   toggleSelectDate() {
-    this._SelectDateService.dateSelectedState$.next(false)
+    this._SelectDateService.dateSelectedState$.next(false);
+    this._SelectPersonsService.personsSelectedState$.next(true);
   }
 
 }

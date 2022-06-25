@@ -4,6 +4,7 @@ import { Subject, Subscription, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { BookFlightService } from '../book-flight/services/book-flight.service';
 import { Airport } from '../book-flight/types';
+import { SelectPersonsService } from '../select-persons/select-persons.service';
 
 @Component({
   selector: 'app-select-destination',
@@ -24,9 +25,12 @@ export class SelectDestinationComponent implements OnInit {
   departureAirportSelected: any;
   destinationAirportSelected: any;
 
+  toggleMenuState: string = 'closed';
+
 
   constructor(
     private _BookFlightService: BookFlightService,
+    private _SelectPersonsService: SelectPersonsService,
     private route: Router
   ) { }
 
@@ -38,23 +42,29 @@ export class SelectDestinationComponent implements OnInit {
     this._BookFlightService.getSelectedDeparture$()
       .pipe(distinctUntilChanged())
       .subscribe((airport: any) => {
-          this.departureAirportSelected = airport;
+        this.departureAirportSelected = airport;
       });
 
-      this._BookFlightService.destination$()
+    this._BookFlightService.destination$()
       .pipe(distinctUntilChanged())
       .subscribe((destination: any) => {
         console.log(destination)
-       
-          if (Array.isArray(destination)) {
-            this.destinationAirportSelected = destination[0][0];
-          } else {
-            this.destinationAirportSelected = destination;
-          }
-        
-        
-       
+
+        if (Array.isArray(destination)) {
+          this.destinationAirportSelected = destination[0][0];
+        } else {
+          this.destinationAirportSelected = destination;
+        }
+
       })
+
+    this._BookFlightService.openSideMenu$().pipe(
+      distinctUntilChanged())
+      .subscribe(
+        (state) => {
+          this.menuOpenState(state);
+        }
+      );
   }
 
 
@@ -69,10 +79,11 @@ export class SelectDestinationComponent implements OnInit {
     this._BookFlightService.selectDestination$.next(airport);
     this._BookFlightService.selectedDestination$.next(airport)
     this.toggleDestination();
-    if(Object.keys(this.departureAirportSelected).length) {
-      setTimeout(() => {
-        this.route.navigate(['/alege-data'])
-      }, 800)
+    if (Object.keys(this.departureAirportSelected).length) {
+      // setTimeout(() => {
+      //   this.route.navigate(['/alege-data'])
+      // }, 800)
+      this._SelectPersonsService.personsSelectedState$.next(true)
     }
   }
 
@@ -80,6 +91,9 @@ export class SelectDestinationComponent implements OnInit {
     this._BookFlightService.destinationMenuState$.next(false)
   }
 
+  menuOpenState(state: string) {
+    this.toggleMenuState = state
+  }
 
   ngOnDestroy() {
     this._unsubscribeAll.next();

@@ -1,0 +1,130 @@
+.select-date {
+  &__container {
+    @include respond(phone) {
+      background-color: $color-sky-blue-light;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+  }
+
+  &__inner {
+    @include respond(phone) {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      box-shadow: rgb(166 197 205 / 15%) 0px 15px 25px, rgb(166 197 205 / 5%) 0px 5px 10px;
+      overflow: hidden;
+      -webkit-backface-visibility: hidden;
+      clip-path: inset(0 round 0 0 0 0);
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: transform 1200ms ease, clip-path 1800ms;
+
+      &.open {
+        pointer-events: none;
+        clip-path: inset(10px round 60px 60px 60px 60px);
+        transform: translate3d(60%, 0, 0) scale(.8);
+        transition: transform 1200ms ease, clip-path 1800ms;
+
+        
+        
+      }
+    }
+  }
+
+  &__header {
+
+    background-color: #A6C5CD;
+    border-bottom-left-radius: 6rem;
+    border-bottom-right-radius: 6rem;
+    padding: 0 1.6rem 4.8rem;
+    position: relative;
+    z-index: 10;
+
+    h1 {
+      color: #fff;
+      font-size: 2.8rem;
+      font-family: "SFProDisplay-Bold";
+      padding: 1.6rem 1.6rem 0;
+    }
+
+    .go-back {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 6.4rem;
+
+      &__action {
+        width: 4.4rem;
+        height: 4.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
+      }
+    }
+  }
+
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+
+// header {
+
+//     background-color: #A6C5CD;
+//     border-bottom-left-radius: 6rem;
+//     border-bottom-right-radius: 6rem;
+//     padding: 0 1.6rem 4.8rem;
+//     position: relative;
+//     z-index: 10;
+
+//     h1 {
+//       color: #fff;
+//       font-size: 2.8rem;
+//       font-family: "SFProDisplay-Bold";
+//       padding: 1.6rem 1.6rem 0;
+//     }
+
+//     .go-back {
+//       display: flex;
+//       width: 100%;
+//       justify-content: flex-start;
+//       align-items: center;
+//       padding-top: 6.4rem;
+
+//       &__action {
+//         width: 4.4rem;
+//         height: 4.4rem;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         font-size: 2.4rem;
+//       }
+//     }
+//   }
+
+
+.calendar {
+  &__container {
+    padding: 14rem 0;
+    height: calc(100% - 9rem);
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+    background-color: $color-white;
+    top: -12rem;
+    overflow: hidden;
+  }
+}
+
+

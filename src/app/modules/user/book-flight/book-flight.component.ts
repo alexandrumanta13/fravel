@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, Subject, Subscription, timer } from 'rxjs';
-import { distinctUntilChanged, take, takeUntil, tap, } from 'rxjs/operators';
+import { BehaviorSubject, of, Subject, Subscription, timer } from 'rxjs';
+import { concatMap, delay, distinctUntilChanged, take, takeUntil, tap, } from 'rxjs/operators';
 import { I18nService, LoaderService } from 'src/app/core/services';
 
 import { CurrentRoute, Language } from 'src/app/core/types';
@@ -123,17 +123,22 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     },
   ]
   routeSubscription: Subscription = new Subscription;
-  departureMenuState: boolean = false;
+  departureState: boolean = false;
   departuresState$ = new BehaviorSubject<boolean>(false)
   destinationState$ = new BehaviorSubject<boolean>(false);
   urlParam: string = 'null';
 
-  
-  selectDateState: boolean = false;
+
+
   selectDateState$ = new BehaviorSubject<boolean>(false);
   dateComponentState$ = new BehaviorSubject<boolean>(true);
   selectPersonsState$ = new BehaviorSubject<boolean>(false);
   personsComponentState$ = new BehaviorSubject<boolean>(true);
+  departureComponentState$ = new BehaviorSubject<boolean>(true);
+  destinationComponentState$ = new BehaviorSubject<boolean>(true);
+
+  flightType: boolean = true;
+
 
   constructor(
     public _translate: TranslateService,
@@ -163,21 +168,21 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     });
 
     this._SelectDateService.getSelectedDate$()
-    .pipe(distinctUntilChanged())
-    .subscribe(date => {
-      console.log(date)
-    })
+      .pipe(distinctUntilChanged())
+      .subscribe(date => {
+        console.log(date)
+      })
     this._SelectDateService.getSelectedDateState$()
-    .pipe(distinctUntilChanged())
-    .subscribe(date => {
-      
-      this.selectDateState$.next(date)
-    })
+      .pipe(distinctUntilChanged())
+      .subscribe(date => {
+
+        this.selectDateState$.next(date)
+      })
     this._SelectPersonsService.getSelectedPersonsState$()
-    .pipe(distinctUntilChanged())
-    .subscribe(date => {
-      this.selectPersonsState$.next(date)
-    })
+      .pipe(distinctUntilChanged())
+      .subscribe(date => {
+        this.selectPersonsState$.next(date);
+      })
 
     this._I18nService.defaultLanguageChanged$()
       .pipe(takeUntil(this._unsubscribeAll),
@@ -189,7 +194,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
           this.changeRouteLanguage(lang);
           this.changeApiLanguage(lang);
           this.dateComponentState$.next(false);
-          
+
         })
       )
       .subscribe(lang => {
@@ -258,10 +263,17 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     this._BookFlightService.toggleDeparture().pipe(
       distinctUntilChanged())
       .subscribe(state => {
+        this.departureComponentState$.next(state);
         this.departuresState$.next(state);
       })
+
     this._BookFlightService.toggleDestination().pipe(
-      distinctUntilChanged())
+      distinctUntilChanged(),
+      tap(state => {
+        this.destinationComponentState$.next(state)
+      }),
+      concatMap(item => of(item).pipe(delay(10))) // delay to obtain animation
+    )
       .subscribe(state => {
         this.destinationState$.next(state);
       })
@@ -316,7 +328,7 @@ export class BookFlightComponent implements OnInit, OnDestroy {
 
 
   toggleDeparture() {
-    this._BookFlightService.departureMenuState$.next(true)
+    this._BookFlightService.departureState$.next(true)
   }
 
   toggleDestination() {
@@ -327,8 +339,22 @@ export class BookFlightComponent implements OnInit, OnDestroy {
     this._BookFlightService.getAirportsByCity(iata_id, 'destination');
     if (Object.keys(this.selectedAirport.getValue()).length) {
       //  this._SelectDateService.dateSelectedState$.next(true)
-       this._SelectPersonsService.personsSelectedState$.next(true)
+      this.goToSelectPersons();
     }
+  }
+
+  goToSelectPersons() {
+    this._SelectPersonsService.personsSelectedState$.next(true)
+  }
+
+  flightTypeChanged(event: Event) {
+    this.flightType = !this.flightType;
+    this._SelectDateService.oneWay$.next(!this.flightType ? true : false);
+    // this.dateComponentState$.next(false);
+    // setTimeout(() => {
+    //   this.dateComponentState$.next(true);
+    // }, 10)
+    
   }
 
 

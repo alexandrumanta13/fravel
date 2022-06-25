@@ -20,11 +20,13 @@
 @import "assets/scss/components/top-destinations";
 @import "assets/scss/components/language-selected-flag";
 @import "assets/scss/components/language-selector";
-@import "assets/scss/components/select-departure";
-@import "assets/scss/components/select-destination";
 @import "assets/scss/components/calendar";
 
 
 @import "assets/scss/pages/book-flight";
+@import "assets/scss/pages/select-departure";
+@import "assets/scss/pages/select-destination";
+@import "assets/scss/pages/select-persons";
+@import "assets/scss/pages/select-date";
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

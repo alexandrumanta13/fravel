@@ -13,6 +13,7 @@
 
   &__inner {
     @include respond(phone) {
+      
       height: 100%;
       width: 100%;
       position: relative;
@@ -24,6 +25,7 @@
       transition: transform 1200ms ease, clip-path 1800ms;
 
       &.open {
+        pointer-events: none;
         clip-path: inset(10px round 60px 60px 60px 60px);
         transform: translate3d(60%, 0, 0) scale(.8);
         transition: transform 1200ms ease, clip-path 1800ms;

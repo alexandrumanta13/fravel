@@ -1,25 +1,27 @@
-<header class="select-date-header">
-  <div class="go-back">
-    <div class="go-back__action" (click)="toggleSelectDate()">
-      <i class="icon-arrow-left"></i>
-    </div>
-  </div>
-  <h1>{{ 'PICK_DATE.TITLE' | translate}}</h1>
-</header>
-
-<div class="calendar__container">
-  <ngb-datepicker #dp [minDate]="minDate"  (dateSelect)="onDateSelection($event)" [(ngModel)]="model" [displayMonths]="12" [dayTemplate]="t" outsideDays="show">
-  </ngb-datepicker>
+<div class="select-date__container">
+  <div class="select-date__inner" [class.open]="toggleMenuState === 'open'">
+    <header class="select-date__header">
+      <div class="go-back">
+        <div class="go-back__action" (click)="toggleSelectDate()">
+          <i class="icon-arrow-left"></i>
+        </div>
+      </div>
+      <h1>{{ 'PICK_DATE.TITLE' | translate}}</h1>
+    </header>
   
-  <ng-template #t let-date let-currentMonth="currentMonth" let-focused="focused">
-    <span class="custom-day"
-          [class.focused]="focused"
-          [class.range]="isRange(date)"
-          [class.hidden]="date.month !== currentMonth" 
-          [class.faded]="isHovered(date) || isInside(date)"
-          (mouseenter)="hoveredDate = date"
-          (mouseleave)="hoveredDate = null">
-      {{ date.day }}
-    </span>
-  </ng-template>  
+    <div class="calendar__container">
+      <ngb-datepicker #dp [minDate]="minDate" (dateSelect)="onDateSelection($event)" [(ngModel)]="model"
+        [displayMonths]="12" [dayTemplate]="t" outsideDays="show">
+      </ngb-datepicker>
+
+      <ng-template #t let-date let-currentMonth="currentMonth" let-focused="focused">
+        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+          [class.hidden]="date.month !== currentMonth" [class.faded]="isHovered(date) || isInside(date)"
+          (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+    <div class="overlay"></div>
+  </div>
 </div>

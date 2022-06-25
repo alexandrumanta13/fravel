@@ -22,7 +22,7 @@ export class BookFlightService {
   destinationsChanged$ = new BehaviorSubject<TopDestinations[]>([]);
   destinations$ = new BehaviorSubject<TopDestinations[]>([]);
   private destinations: TopDestinations[] = [];
-  departureMenuState$ = new BehaviorSubject<boolean>(false);
+  departureState$ = new BehaviorSubject<boolean>(false);
   destinationMenuState$ = new BehaviorSubject<boolean>(false);
   selectedDeparture$ = new BehaviorSubject<any>('');
   selectDestination$ = new BehaviorSubject<any>('');
@@ -237,7 +237,7 @@ export class BookFlightService {
   }
 
   toggleDeparture(): Observable<boolean> {
-    return this.departureMenuState$.asObservable()
+    return this.departureState$.asObservable()
   }
   toggleDestination(): Observable<boolean> {
     return this.destinationMenuState$.asObservable()

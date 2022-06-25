@@ -89,7 +89,7 @@ export class SelectDateService extends NgbDatepickerI18n {
   }
 
   setSelectedDate(toDate: any, fromDate: any) {
-    this.dateSelected$.next({'toDate': toDate, 'fromDate': toDate});
+    this.dateSelected$.next({'fromDate': fromDate, 'toDate': toDate});
   }
 
   getSelectedDate$(): Observable<any> {

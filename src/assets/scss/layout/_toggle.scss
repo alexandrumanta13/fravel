@@ -1,8 +1,7 @@
 .toggle {
 	display: flex;
-    width: 150px;
-    margin-left: auto;
     height: 100%;
+    flex-direction: column;
 }
 
 .toggle input[type="checkbox"] {

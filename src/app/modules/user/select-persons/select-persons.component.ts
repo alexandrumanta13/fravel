@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { BookFlightService } from '../book-flight/services/book-flight.service';
 import { SelectDateService } from '../select-date/select-date.service';
 import { SelectPersonsService } from './select-persons.service';
 
@@ -9,11 +11,10 @@ import { SelectPersonsService } from './select-persons.service';
   templateUrl: './select-persons.component.html',
   styleUrls: ['./select-persons.component.scss']
 })
-export class SelectPersonsComponent implements OnInit {
+export class SelectPersonsComponent implements OnInit, OnDestroy {
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  @ViewChild('scrollTop') private myScrollContainer!: ElementRef;
 
-
-
-  flightType: boolean = true;
   classType: boolean = true;
 
   noOfAdults: number = 1;
@@ -26,11 +27,15 @@ export class SelectPersonsComponent implements OnInit {
   disabledAddHandLuggage$ = new BehaviorSubject<boolean>(false);
   disabledAddLuggage$ = new BehaviorSubject<boolean>(false);
   disabledAddInfant$ = new BehaviorSubject<boolean>(false);
-  noTotalPersons$ = new BehaviorSubject<Persons>({} as Persons)
+  noTotalPersons$ = new BehaviorSubject<Persons>({} as Persons);
+
+  toggleMenuState: string = 'closed';
 
   constructor(
     private _SelectPersonsService: SelectPersonsService,
-    private _SelectDateService: SelectDateService
+    private _SelectDateService: SelectDateService,
+    private _BookFlightService: BookFlightService,
+    @Inject(DOCUMENT) private _document: any,
   ) { }
 
   ngOnInit(): void {
@@ -62,13 +67,18 @@ export class SelectPersonsComponent implements OnInit {
         }
 
       });
+
+    this._BookFlightService.openSideMenu$().pipe(
+      distinctUntilChanged())
+      .subscribe(
+        (state) => {
+          this.menuOpenState(state);
+        }
+      );
   }
 
-  flightTypeChanged(event: Event) {
-    this.flightType = !this.flightType;
-    console.log(this.flightType)
-    this._SelectDateService.oneWay$.next(!this.flightType ? true : false);
-  }
+  
+
   classTypeChanged(event: Event) {
     this.classType = !this.classType;
   }
@@ -127,7 +137,6 @@ export class SelectPersonsComponent implements OnInit {
     this.calculateTotalPersons();
   }
 
-
   removeOneHandLuggage() {
     if (this.noOfHandLuggage === 0) {
       return;
@@ -135,36 +144,50 @@ export class SelectPersonsComponent implements OnInit {
     this.noOfHandLuggage -= 1;
     this.calculateTotalPersons();
   }
+
   addOneLuggage() {
     this.noOfLuggage += 1;
     this.calculateTotalPersons();
   }
 
-
   removeOneLuggage() {
-    if (this.noOfHandLuggage === 0) {
+    if (this.noOfLuggage === 0) {
       return;
     }
-    this.noOfHandLuggage -= 1;
+    this.noOfLuggage -= 1;
     this.calculateTotalPersons();
   }
 
   toggleSelectPersons() {
-    this._SelectPersonsService.personsSelectedState$.next(false)
+    this._SelectPersonsService.personsSelectedState$.next(false);
   }
 
   selectDate() {
-    //this._SelectPersonsService.personsSelectedState$.next(false);
+    this._SelectPersonsService.personsSelectedState$.next(false);
+    setTimeout(() => {
+      this.scrollToTop();
+    }, 500);
     
-   
   }
 
   changeDateState() {
     this._SelectDateService.dateSelectedState$.next(true);
-    setTimeout(() => {
-     
-    }, 100);
-    
+  }
+
+  menuOpenState(state: string) {
+    this.toggleMenuState = state
+  }
+
+  scrollToTop() {
+    console.log(this.myScrollContainer.nativeElement)
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = 0;
+    } catch (err) { }
+  }
+
+  ngOnDestroy() {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
 }
@@ -175,4 +198,8 @@ export interface Persons {
   noOfAdults: number,
   noOfHandLuggage: number,
   noOfLuggage: number,
+}
+
+function takeUntil(_unsubscribeAll: any): import("rxjs").OperatorFunction<string, unknown> {
+  throw new Error('Function not implemented.');
 }

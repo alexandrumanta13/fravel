@@ -23,12 +23,22 @@ export class SelectDepartureComponent implements OnInit, OnDestroy {
   screenWidth: number = 0;
   isSearching: boolean = false;
 
+  toggleMenuState: string = 'closed';
+
 
   constructor(
     private _BookFlightService: BookFlightService,
   ) { }
 
   ngOnInit(): void {
+
+    this._BookFlightService.openSideMenu$().pipe(
+      distinctUntilChanged())
+      .subscribe(
+        (state) => {
+          this.menuOpenState(state);
+        }
+      );
 
     this._BookFlightService.getAirports$()
       .pipe(distinctUntilChanged())
@@ -62,9 +72,14 @@ export class SelectDepartureComponent implements OnInit, OnDestroy {
   }
 
   toggleDeparture() {
-    this._BookFlightService.departureMenuState$.next(false)
+    this._BookFlightService.departureState$.next(false)
   }
 
+  menuOpenState(state: string) {
+    if (this._BookFlightService.departureState$.getValue()) {
+      this.toggleMenuState = state;
+    }
+  }
 
   ngOnDestroy() {
     this._unsubscribeAll.next();

@@ -1,54 +1,70 @@
 <div class="book-flight__container">
-    <div class="book-flight__inner" [class.open]="toggleMenuState === 'open'">
-        <div class="destination-selector">
-            <div class="blurry-overlay"></div>
-            <div class="destination-selector__inner">
-                <div class="departure-city" (click)="toggleDeparture()">
-                    <h3 *ngIf="selectedAirport.getValue() === ''">{{ 'BOOK-FILGHT.WHERE_FROM_FLY' | translate}} <i class="icon-edit"></i></h3>
-                    <h3 *ngIf="selectedAirport.getValue() !== ''">{{(selectedAirport | async).city.name}} <i class="icon-edit"></i></h3>
-                </div>
-                <aside class="border-dash"><i class="icon-plane-filled"></i></aside>
-                <div class="destination-city">
-                    <h1>{{ 'BOOK-FILGHT.WHERE_TO_FLY' | translate }}</h1>
-                    <div class="vwrap" *ngIf="selectedTopDestinations && (destinationAirport | async) === ''" (click)="toggleDestination()">
-                        <div class="vmove">
-                            <div class="vslide" *ngFor="let topDestination of selectedTopDestinations">
-                                <h2>{{topDestination.city_name}}</h2>
-                                <h3>{{topDestination.country}}</h3>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <!-- <div class="destination-city__actions" *ngIf="selectedAirport.getValue() !== '' && (destinationAirport | async) !== ''">
-                        <span>{{ 'BOOK-FILGHT.FORWARD' | translate}}</span>
-                        <i class="icon-arrow-right"></i>
-                    </div> -->
-                   
-                    <div class="selected-destination" *ngIf="(destinationAirport | async) !== ''" (click)="toggleDestination()">
-                        <h2>{{(destinationAirport | async).city.name}}</h2>
-                        <h3 *ngIf="(destinationAirport | async).country">{{(destinationAirport | async).country.name}}</h3>
-                        <h3 *ngIf="(destinationAirport | async).city.country">{{(destinationAirport | async).city.country.name}}</h3>
-                    </div>
-                </div>
-            </div>
+  <div class="book-flight__inner" [class.open]="toggleMenuState === 'open'">
+    <div class="destination-selector">
+      <div class="blurry-overlay"></div>
+      <div class="destination-selector__inner">
+        <div class="departure-city" (click)="toggleDeparture()">
+          <h3 *ngIf="selectedAirport.getValue() === ''">{{ 'BOOK-FILGHT.WHERE_FROM_FLY' | translate}} <i
+              class="icon-edit"></i></h3>
+          <h3 *ngIf="selectedAirport.getValue() !== ''">{{(selectedAirport | async).city.name}} <i
+              class="icon-edit"></i></h3>
         </div>
-        <div class="top-destinations">
-            <h4 class="top-destinations__title">{{ 'BOOK-FILGHT.TOP_DESTINATIONS.TITLE' | translate}}</h4>
-            <div class="top-destinations__inner">
-                <ul class="top-destinations__list" *ngIf="selectedTopDestinations">
-                    <li class="top-destinations__item" *ngFor="let topDestination of selectedTopDestinations">
-                        <div (click)="selectDestination(topDestination.iata_id)" class="item__clip">
-                            <img src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{topDestination.city_id}}.jpg&fit=cover&width=180&height=230&dpr=1" alt="">
-                            <h4>{{topDestination.city_name}}</h4>
-                        </div>
-                    </li>
-                </ul>
+        <aside class="border-dash"><i class="icon-plane-filled"></i></aside>
+        <div class="destination-city">
+          <h1>{{ 'BOOK-FILGHT.WHERE_TO_FLY' | translate }}</h1>
+          <div class="vwrap" *ngIf="selectedTopDestinations && (destinationAirport | async) === ''"
+            (click)="toggleDestination()">
+            <div class="vmove">
+              <div class="vslide" *ngFor="let topDestination of selectedTopDestinations">
+                <h2>{{topDestination.city_name}}</h2>
+                <h3>{{topDestination.country}}</h3>
+              </div>
             </div>
+          </div>
+          
+          <div class="destination-city__actions">
+            <div class="toggle">
+              <input type="checkbox" name="flightType" id="flightType" checked (change)="flightTypeChanged($event)">
+              <label
+                for="flightType"></label>
+                <span>{{ flightType ? ('BOOK-FILGHT.ROUNDTRIP' | translate) : ('BOOK-FILGHT.ONEWAY' | translate)}}</span>
+            </div>
+            <div class="next-step" (click)="goToSelectPersons()" *ngIf="selectedAirport.getValue() !== '' && (destinationAirport | async) !== ''">
+                <!-- <span>{{ 'BOOK-FILGHT.FORWARD' | translate}}</span> -->
+                <i class="icon-arrow-right"></i>
+            </div>
+          </div>
+
+
+          <div class="selected-destination" *ngIf="(destinationAirport | async) !== ''" (click)="toggleDestination()">
+            <h2>{{(destinationAirport | async).city.name}}</h2>
+            <h3 *ngIf="(destinationAirport | async).country">{{(destinationAirport | async).country.name}}</h3>
+            <h3 *ngIf="(destinationAirport | async).city.country">{{(destinationAirport | async).city.country.name}}
+            </h3>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="top-destinations">
+      <h4 class="top-destinations__title">{{ 'BOOK-FILGHT.TOP_DESTINATIONS.TITLE' | translate}}</h4>
+      <div class="top-destinations__inner">
+        <ul class="top-destinations__list" *ngIf="selectedTopDestinations">
+          <li class="top-destinations__item" *ngFor="let topDestination of selectedTopDestinations">
+            <div (click)="selectDestination(topDestination.iata_id)" class="item__clip">
+              <img
+                src="https://images.skypicker.com/?image=https://images.kiwi.com/photos/385x320/{{topDestination.city_id}}.jpg&fit=cover&width=180&height=230&dpr=1"
+                alt="">
+              <h4>{{topDestination.city_name}}</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-select-departure [class.open]="departuresState$.getValue()"></app-select-departure>
-<app-select-destination [class.open]="destinationState$.getValue()"></app-select-destination>
+<app-select-destination [class.open]="(destinationState$ | async)"></app-select-destination>
 <app-select-date [class.open]="(selectDateState$ | async)" *ngIf="dateComponentState$ | async"></app-select-date>
-<app-select-persons [class.open]="selectPersonsState$.getValue()" *ngIf="personsComponentState$ | async"></app-select-persons>
+<app-select-persons [class.open]="selectPersonsState$.getValue()" *ngIf="personsComponentState$ | async">
+</app-select-persons>

@@ -32,10 +32,10 @@
         "TITLE": "Choose departure date"
     },
     "SELECT_NO_PERSONS":{
-        "TITLE": "Passengers and baggs",
+        "TITLE": "Passengers and luggage",
         "FLIGHT": "Flight type",
         "PERSONS_SUBTITLE": "Passengers",
-        "LUGGAGE_SUBTITLE": "Baggs",
+        "LUGGAGE_SUBTITLE": "Luggage",
         "ROUNDTRIP": "Round trip",
         "ONEWAY": "One way",
         "ECONOMY": "Economy",
@@ -43,9 +43,9 @@
         "ADULTS_LABEL": "Adults",
         "CHILDS_LABEL": "Children",
         "INFANTS_LABEL": "Infants",
-        "ADULTS_INFO": "Over 11 YO",
-        "CHILDS_INFO": "2 - 11 YO",
-        "INFANTS_INFO": "Under 2 YO",
+        "ADULTS_INFO": "Above age 11",
+        "CHILDS_INFO": "Between 2 - 11 years",
+        "INFANTS_INFO": "Below age 2",
         "HAND_LUGGAGE": "Hand luggage",
         "LUGGAGE": "Hold luggage",
         "SELECT_DATE": "Select departure date"

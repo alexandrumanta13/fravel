@@ -34,8 +34,14 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleLanguage() {
+    console.log(this._BookFlightService.menuState$.getValue())
+    if(this._BookFlightService.menuState$.getValue() === 'open') {
+      this.state = 'closed';
+      this._BookFlightService.menuState$.next(this.state)
+    }
     this.languageState = (this.state === 'closed' ? 'open' : 'closed');
     this._I18nService.languageState$.next(this.languageState);
+    
   }
 
 }

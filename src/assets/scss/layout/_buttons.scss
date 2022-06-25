@@ -25,6 +25,13 @@
       background-color: $color-dark;
       box-shadow: none;
     }
+    &:not(:disabled):not(.disabled):active {
+      border: none;
+      outline: none;
+      color: $color-white;
+      background-color: $color-dark;
+      box-shadow: none;
+    }
   }
 
   &.btn-full-width {
@@ -54,16 +61,18 @@
     }
 
     &.qnt-minus {
-      position: absolute;
+      position: relative;
       left: 0;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      z-index: 2;
     }
     &.qnt-plus {
-      position: absolute;
+      position: relative;
       right: 0;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      z-index: 2;
     }
 
     &:focus, &:hover {

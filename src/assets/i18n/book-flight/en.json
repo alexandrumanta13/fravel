@@ -1,12 +1,14 @@
 {
     "BOOK-FILGHT": {
         "TITLE": "Plane tickets",
-        "WHERE_TO_FLY": "Where do you want to Fly?",
+        "WHERE_TO_FLY": "Your next destination with us at...",
         "WHERE_FROM_FLY": "Departure from?",
         "TOP_DESTINATIONS": {
             "TITLE": "Popular destinations"
         },
-        "FORWARD": "Forward"
+        "FORWARD": "Forward",
+        "ROUNDTRIP": "Round trip",
+        "ONEWAY": "One way"
     },
     "COMMON": {
         "LABELS": {
