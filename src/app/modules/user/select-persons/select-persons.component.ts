@@ -69,22 +69,37 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
           this.disabledAddLuggage$.next(false);
         }
 
-        const bagOptionsAdultQuery : IBagsOptions = {
+        const handBagOptionsAdultQuery : IBagsOptions = {
           selectedAdults: this.noOfAdults,
           bagsQueryType: BagsQueryType.adult,
           bagsSelected: noTotalPersons.noOfTotalHandLuggage,
           bagsType: BagsType.hand
         }
 
-        const bagOptionsChildrenQuery : IBagsOptions = {
+        const handBagOptionsChildrenQuery : IBagsOptions = {
+          selectedChildren: this.noOfChilds,
+          bagsSelected: noTotalPersons.noOfTotalHandLuggage,
+          bagsQueryType: BagsQueryType.children,
+          bagsType: BagsType.hand
+        }
+        const holdBagOptionsAdultQuery : IBagsOptions = {
+          selectedAdults: this.noOfAdults,
+          bagsQueryType: BagsQueryType.adult,
+          bagsSelected: noTotalPersons.noOfTotalHandLuggage,
+          bagsType: BagsType.hand
+        }
+
+        const holdBagOptionsChildrenQuery : IBagsOptions = {
           selectedChildren: this.noOfChilds,
           bagsSelected: noTotalPersons.noOfTotalHandLuggage,
           bagsQueryType: BagsQueryType.children,
           bagsType: BagsType.hand
         }
 
-        console.log(this._SelectPersonsService.generateKiwiSerializedBags(bagOptionsChildrenQuery));
-        console.log(this._SelectPersonsService.generateKiwiSerializedBags(bagOptionsAdultQuery));
+        console.log(this._SelectPersonsService.generateKiwiSerializedBags(handBagOptionsAdultQuery));
+        console.log(this._SelectPersonsService.generateKiwiSerializedBags(handBagOptionsChildrenQuery));
+        console.log(this._SelectPersonsService.generateKiwiSerializedBags(holdBagOptionsAdultQuery));
+        console.log(this._SelectPersonsService.generateKiwiSerializedBags(holdBagOptionsChildrenQuery));
         // generateKiwiSerializedBags(bagOptionsAdultQuery);
 
       });
