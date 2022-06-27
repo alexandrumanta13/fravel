@@ -133,7 +133,7 @@
                 </button>
 
                 <input [disabled]="(disabledAddHandLuggage$ | async) || false" class="qnt" min="1" max="11"
-                  [(ngModel)]="noOfHandLuggage" value="1" type="number" name="noOfHandLuggage">
+                  [(ngModel)]="noOfTotalHandLuggage" value="1" type="number" name="noOfTotalHandLuggage">
 
                 <button [disabled]="(disabledAddHandLuggage$ | async) || false" (click)="addOneHandLuggage()"
                   class="btn btn-square-icon qnt-plus" type="button">
@@ -157,7 +157,7 @@
                 </button>
 
                 <input [disabled]="(disabledAddLuggage$ | async) || false" class="qnt" min="1" max="11"
-                  [(ngModel)]="noOfLuggage" value="1" type="number" name="noOfLuggage">
+                  [(ngModel)]="noOfTotalHoldLuggage" value="1" type="number" name="noOfTotalHoldLuggage">
 
                 <button [disabled]="(disabledAddLuggage$ | async) || false" (click)="addOneLuggage()"
                   class="btn btn-square-icon qnt-plus" type="button">

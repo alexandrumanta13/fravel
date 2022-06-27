@@ -5,6 +5,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { BookFlightService } from '../book-flight/services/book-flight.service';
 import { SelectDateService } from '../select-date/select-date.service';
 import { SelectPersonsService } from './select-persons.service';
+import { BagsQueryType, BagsType, IBagsOptions, Persons } from './select-persons.type';
 
 @Component({
   selector: 'app-select-persons',
@@ -20,8 +21,8 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
   noOfAdults: number = 1;
   noOfChilds: number = 0;
   noOfInfants: number = 0;
-  noOfHandLuggage: number = 0;
-  noOfLuggage: number = 0;
+  noOfTotalHandLuggage: number = 0;
+  noOfTotalHoldLuggage: number = 0;
 
   disabledAdd$ = new BehaviorSubject<boolean>(false);
   disabledAddHandLuggage$ = new BehaviorSubject<boolean>(false);
@@ -42,8 +43,10 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
     this.noTotalPersons$
       .pipe(distinctUntilChanged())
       .subscribe((noTotalPersons: Persons) => {
-
+        
         (noTotalPersons.total >= 9 ? this.disabledAdd$.next(true) : this.disabledAdd$.next(false));
+
+        console.log(noTotalPersons)
 
         if (noTotalPersons.noOfInfants >= this.noOfAdults) {
           this.disabledAddInfant$.next(true);
@@ -52,19 +55,37 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
           this.disabledAddInfant$.next(false);
         }
 
-        if (noTotalPersons.noOfHandLuggage >= (this.noOfAdults + this.noOfChilds)) {
+        if (noTotalPersons.noOfTotalHandLuggage >= (this.noOfAdults + this.noOfChilds)) {
           this.disabledAddHandLuggage$.next(true);
-          this.noOfHandLuggage = (this.noOfAdults + this.noOfChilds);
+          this.noOfTotalHandLuggage = (this.noOfAdults + this.noOfChilds);
         } else {
           this.disabledAddHandLuggage$.next(false);
         }
 
-        if (noTotalPersons.noOfLuggage >= ((this.noOfAdults + this.noOfChilds) * 2)) {
+        if (noTotalPersons.noOfTotalHoldLuggage >= ((this.noOfAdults + this.noOfChilds) * 2)) {
           this.disabledAddLuggage$.next(true);
-          this.noOfLuggage = ((this.noOfAdults + this.noOfChilds) * 2);
+          this.noOfTotalHoldLuggage = ((this.noOfAdults + this.noOfChilds) * 2);
         } else {
           this.disabledAddLuggage$.next(false);
         }
+
+        const bagOptionsAdultQuery : IBagsOptions = {
+          selectedAdults: this.noOfAdults,
+          bagsQueryType: BagsQueryType.adult,
+          bagsSelected: noTotalPersons.noOfTotalHandLuggage,
+          bagsType: BagsType.hand
+        }
+
+        const bagOptionsChildrenQuery : IBagsOptions = {
+          selectedChildren: this.noOfChilds,
+          bagsSelected: noTotalPersons.noOfTotalHandLuggage,
+          bagsQueryType: BagsQueryType.children,
+          bagsType: BagsType.hand
+        }
+
+        console.log(this._SelectPersonsService.generateKiwiSerializedBags(bagOptionsChildrenQuery));
+        console.log(this._SelectPersonsService.generateKiwiSerializedBags(bagOptionsAdultQuery));
+        // generateKiwiSerializedBags(bagOptionsAdultQuery);
 
       });
 
@@ -89,8 +110,8 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
         'total': this.noOfAdults + this.noOfChilds + this.noOfInfants,
         'noOfInfants': this.noOfInfants,
         'noOfAdults': this.noOfAdults,
-        'noOfHandLuggage': this.noOfHandLuggage,
-        'noOfLuggage': this.noOfLuggage
+        'noOfTotalHandLuggage': this.noOfTotalHandLuggage,
+        'noOfTotalHoldLuggage': this.noOfTotalHoldLuggage
       })
   }
 
@@ -133,28 +154,28 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
   }
 
   addOneHandLuggage() {
-    this.noOfHandLuggage += 1;
+    this.noOfTotalHandLuggage += 1;
     this.calculateTotalPersons();
   }
 
   removeOneHandLuggage() {
-    if (this.noOfHandLuggage === 0) {
+    if (this.noOfTotalHandLuggage === 0) {
       return;
     }
-    this.noOfHandLuggage -= 1;
+    this.noOfTotalHandLuggage -= 1;
     this.calculateTotalPersons();
   }
 
   addOneLuggage() {
-    this.noOfLuggage += 1;
+    this.noOfTotalHoldLuggage += 1;
     this.calculateTotalPersons();
   }
 
   removeOneLuggage() {
-    if (this.noOfLuggage === 0) {
+    if (this.noOfTotalHoldLuggage === 0) {
       return;
     }
-    this.noOfLuggage -= 1;
+    this.noOfTotalHoldLuggage -= 1;
     this.calculateTotalPersons();
   }
 
@@ -192,14 +213,6 @@ export class SelectPersonsComponent implements OnInit, OnDestroy {
 
 }
 
-export interface Persons {
-  total: number,
-  noOfInfants: number,
-  noOfAdults: number,
-  noOfHandLuggage: number,
-  noOfLuggage: number,
-}
 
-function takeUntil(_unsubscribeAll: any): import("rxjs").OperatorFunction<string, unknown> {
-  throw new Error('Function not implemented.');
-}
+
+
